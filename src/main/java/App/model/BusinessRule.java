@@ -7,4 +7,6 @@ public abstract class BusinessRule{
     protected String description;
     protected String example;
     protected JsonObject triggerEvents;
+
+    BusinessRule(String type, String description, String example, JsonObject triggerEvents)
 }

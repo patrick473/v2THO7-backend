@@ -6,8 +6,14 @@ public class AttributeListRule extends StrictDataConstraint implements ISerializ
 
     private JsonObject list;
     private boolean inList;
+
+    AttributeListRule(JsonObject list,boolean inList,String column,String table){
+        super()
+    }
+
     @Override
     public String generateCode() {
         return "beep";
     }
+
 }
