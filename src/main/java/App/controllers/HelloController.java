@@ -9,7 +9,7 @@ public class HelloController{
 
     @RequestMapping("/")
     public String index(){
-        return "test test this is an endpoint";
+        return "test test thies is an endpoint";
     }
 
 }
