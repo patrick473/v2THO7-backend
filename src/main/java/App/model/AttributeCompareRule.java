@@ -1,25 +1,35 @@
 package App.model;
 
-public class AttributeCompareRule extends StrictDataConstraint implements ISerializable{
+public class AttributeCompareRule extends StrictDataConstraint<AttributeCompareRule> implements ISerializable {
 
     private String comparisonType;
     private String otherColumn;
-    
-    AttributeCompareRule(String comparisonType, String otherColumn,String column,String table,String description,String example){
-        this.comparisonType = comparisonType;
-        this.otherColumn = otherColumn;
-        this
+
+    AttributeCompareRule() {
+        super(AttributeCompareRule.class);
+
     }
-   
-    public String getComparisonType(){
+
+    public AttributeCompareRule comparisonType(String comparisonType) {
+        this.comparisonType = comparisonType;
+        return self;
+    }
+
+    public AttributeCompareRule otherColumn(String otherColumn) {
+        this.otherColumn = otherColumn;
+        return self;
+    }
+
+    public String getComparisonType() {
         return this.comparisonType;
     }
-    
-    public String getOtherColumn(){
+
+    public String getOtherColumn() {
         return this.otherColumn;
     }
+
     @Override
     public String generateCode() {
-        return "beep" ;
+        return "beep";
     }
 }
