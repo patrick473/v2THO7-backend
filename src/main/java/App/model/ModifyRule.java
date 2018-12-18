@@ -4,7 +4,7 @@ public class ModifyRule extends BusinessRule<ModifyRule> implements ISerializabl
 
     private String code;
 
-    ModifyRule() {
+    public ModifyRule() {
         super(ModifyRule.class);
     }
 

@@ -5,7 +5,7 @@ public class EntityOtherRule extends StrictDataConstraint<EntityOtherRule> imple
     private String otherColumn;
     private String otherTable;
 
-    EntityOtherRule() {
+    public EntityOtherRule() {
         super(EntityOtherRule.class);
     }
 

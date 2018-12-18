@@ -4,7 +4,7 @@ public class AttributeOtherRule extends StrictDataConstraint<AttributeOtherRule>
 
     private String statement;
 
-    AttributeOtherRule() {
+    public AttributeOtherRule() {
         super(AttributeOtherRule.class);
     }
 

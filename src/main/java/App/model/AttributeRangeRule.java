@@ -6,7 +6,7 @@ public class AttributeRangeRule extends StrictDataConstraint<AttributeRangeRule>
     private int rangeEnd;
     private boolean inRange;
 
-    AttributeRangeRule() {
+    public AttributeRangeRule() {
         super(AttributeRangeRule.class);
     }
 

@@ -2,10 +2,10 @@ package App.model;
 
 public class TupleCompareRule extends StrictDataConstraint<TupleCompareRule> implements ISerializable {
 
-    public String otherColumn;
-    public String comparisonType;
+    private String otherColumn;
+    private String comparisonType;
 
-    TupleCompareRule() {
+    public TupleCompareRule() {
         super(TupleCompareRule.class);
     }
 

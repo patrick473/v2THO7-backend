@@ -5,7 +5,7 @@ public class AttributeCompareRule extends StrictDataConstraint<AttributeCompareR
     private String comparisonType;
     private String otherColumn;
 
-    AttributeCompareRule() {
+    public AttributeCompareRule() {
         super(AttributeCompareRule.class);
 
     }

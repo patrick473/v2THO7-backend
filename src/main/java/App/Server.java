@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Server {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Server.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Server.class, args);
+    }
 
-	@Bean
+    @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
 

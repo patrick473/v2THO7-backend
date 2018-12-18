@@ -7,7 +7,7 @@ public class AttributeListRule extends StrictDataConstraint<AttributeListRule> i
     private JsonObject list;
     private boolean inList;
 
-    AttributeListRule() {
+    public AttributeListRule() {
         super(AttributeListRule.class);
     }
 

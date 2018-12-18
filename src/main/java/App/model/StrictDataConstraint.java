@@ -6,7 +6,7 @@ public abstract class StrictDataConstraint<T extends StrictDataConstraint<?>> ex
     protected String column;
     protected String table;
 
-    StrictDataConstraint(final Class<T> selfClass) {
+    public StrictDataConstraint(final Class<T> selfClass) {
         super(selfClass);
         this.self = selfClass.cast(this);
     }

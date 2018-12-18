@@ -4,7 +4,7 @@ public class TupleOtherRule extends StrictDataConstraint<TupleOtherRule> impleme
     private String statement;
     private String otherColumn;
 
-    TupleOtherRule() {
+    public TupleOtherRule() {
         super(TupleOtherRule.class);
     }
 

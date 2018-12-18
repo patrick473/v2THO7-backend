@@ -5,9 +5,11 @@ import javax.json.JsonObject;
 public abstract class BusinessRule<T extends BusinessRule<?>> {
 
    protected final T self;
+   protected int id;
    protected String type;
    protected String description;
    protected String example;
+   protected String name;
    protected JsonObject triggerEvents;
 
   // fluid interface building
@@ -16,6 +18,10 @@ public abstract class BusinessRule<T extends BusinessRule<?>> {
       this.self = selfClass.cast(this);
    }
 
+   public T id(final int id){
+      this.id = id;
+      return self;
+   }
    public T type(final String type) {
       this.type = type;
       return self;
@@ -25,7 +31,10 @@ public abstract class BusinessRule<T extends BusinessRule<?>> {
       this.description = description;
       return self;
    }
-
+   public T name(final String name){
+      this.name = name;
+      return self;
+   }
    public T example(final String example) {
       this.example = example;
       return self;
@@ -38,6 +47,9 @@ public abstract class BusinessRule<T extends BusinessRule<?>> {
 
    // getters
 
+   public int getID(){
+      return this.id;
+   }
    public String getType() {
       return this.type;
    }
