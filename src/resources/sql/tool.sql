@@ -111,12 +111,6 @@ create table Operator (
     constraint pk_operator primary key (id)
 );
 
-create table OperatorToBusinessRuleType (
-    operator number not null,
-    businessRuleType number not null,
-    constraint pk_operator_to_businessruletype primary key (operator, businessRuleType)
-);
-
 create table OperatorOnBusinessRuleType (
     businessRuleType number not null,
     operator number not null,
