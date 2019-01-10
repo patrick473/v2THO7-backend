@@ -5,5 +5,14 @@ package App.model.businessrulebs;
  */
 public class Category {
 
-    private String name;
+    private String _name;
+
+    Category(String name){
+        this._name = name;
+    }
+
+    public String name(){
+        return this._name;
+    }
+
 }
