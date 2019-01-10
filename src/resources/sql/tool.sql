@@ -120,4 +120,3 @@ create table OperatorOnBusinessRuleType (
     constraint fk_operator_businessRuleType foreign key (operator) references Operator (id),
     constraint pk_OperatorOnBusinessRuleType primary key (businessRuleType, Operator)
 );
-
