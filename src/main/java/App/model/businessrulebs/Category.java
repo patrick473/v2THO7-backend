@@ -7,7 +7,7 @@ public class Category {
 
     private String _name;
 
-    Category(String name){
+    public Category(String name){
         this._name = name;
     }
 

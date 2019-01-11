@@ -8,7 +8,7 @@ public class Operator {
     private String _name;
     private String _action;
 
-    Operator(String name, String action){
+    public Operator(String name, String action){
         this._name = name;
         this._action = action;
     }

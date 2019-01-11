@@ -3,6 +3,8 @@ package App.model.businessrulebs;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+
 /**
  * BusinessRuleType
  */
@@ -18,8 +20,9 @@ public class BusinessRuleType {
     private Map<String, String> _parameters;
     private Category _category;
 
-    BusinessRuleType(String id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
+    public BusinessRuleType(String id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
             ArrayList<Operator> possibleOperators, Map<String, String> parameters, Category category) {
+                
         this._id = id;
         this._name = name;
         this._nameCode = nameCode;
@@ -30,6 +33,7 @@ public class BusinessRuleType {
         this._parameters = parameters;
         this._category = category;
     }
+
 
     public String id() {
         return this._id;

@@ -2,9 +2,11 @@ package App.model.businessrulebs;
 
 import java.util.Map;
 
+
 /**
  * BusinessRule
  */
+
 public class BusinessRule {
 
     private String _id;
@@ -14,7 +16,7 @@ public class BusinessRule {
     private Map<String, String> _bindings;
     private BusinessRuleType _type;
 
-    BusinessRule(String id, String name, boolean applied, Operator operator, Map<String, String> bindings,
+    public BusinessRule(String id, String name, boolean applied, Operator operator, Map<String, String> bindings,
             BusinessRuleType type) {
         this._id = id;
         this._name = name;
