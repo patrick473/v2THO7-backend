@@ -19,7 +19,7 @@ public class BusinessRuleTypeService {
         System.out.println(brType.toString());
         return "succes";
     }
-    public BusinessRuleType getRule(String id){
+    public BusinessRuleType getRule(int id){
           
         ArrayList<Operator> possibleOperators = new ArrayList<Operator>();
         possibleOperators.add(new Operator("inRange", "x in (y,z)"));

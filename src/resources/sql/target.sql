@@ -2,7 +2,7 @@ create table Department (
     departmentID number generated always as identity,
     name varchar2(255) not null,
     location varchar2(255),
-    constraint pk_department primary key (departmentnumber)
+    constraint pk_department primary key (departmentID)
 );
 
 create table Employee (
@@ -18,8 +18,8 @@ create table Employee (
     sex char(1) not null,
     jobtitle varchar2(255) not null,
     department number not null,
-    constraint fk_employee_department foreign key (department) references department(departmentnumber),
-    constraint pk_employee primary key (employeenumber)
+    constraint fk_employee_department foreign key (department) references department(departmentID),
+    constraint pk_employee primary key (employeeID)
 );
  
 
@@ -28,7 +28,7 @@ create table Project (
     projectID number generated always as identity,
     name varchar2(255) not null,
     location varchar2(255),
-    constraint pk_project primary key (projectnumber)
+    constraint pk_project primary key (projectID)
 );
 
 create table WorksOn (

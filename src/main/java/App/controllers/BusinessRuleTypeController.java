@@ -39,7 +39,7 @@ public class BusinessRuleTypeController{
       return result;
     }
     @RequestMapping(value ="/type/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String getType(@PathVariable("id") String id) {
+    public String getType(@PathVariable("id") int id) {
 
         String result = "";
         ObjectMapper mapper = new ObjectMapper();
