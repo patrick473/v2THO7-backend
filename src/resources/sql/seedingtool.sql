@@ -51,3 +51,6 @@ INSERT INTO targetcolumn(targettable,name,datatype) VALUES(3,'location','varchar
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(4,'jobid','number');
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(4,'projectid','number');
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(4,'employeeid','number');
+
+insert into CATEGORY(CATEGORY) values ('strict data constraint rule');
+insert into CATEGORY(CATEGORY) values ('other');

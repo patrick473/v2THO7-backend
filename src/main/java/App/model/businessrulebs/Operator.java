@@ -5,10 +5,12 @@ package App.model.businessrulebs;
  */
 public class Operator {
 
+    private int _id;
     private String _name;
     private String _action;
 
-    public Operator(String name, String action){
+    public Operator(int id,String name, String action){
+        this._id = id;
         this._name = name;
         this._action = action;
     }
@@ -19,5 +21,7 @@ public class Operator {
     public String action(){
         return this._action;
     }
-    
+    public int id(){
+        return this._id;
+    }
 }

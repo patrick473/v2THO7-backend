@@ -26,17 +26,17 @@ import App.services.BusinessRuleTypeService;
 public class BusinessRuleTypeController{
     BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
 
-    @RequestMapping(value ="/type", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    @RequestMapping(value ="/type", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
     public String newType(@RequestBody String jsonString){
-        String result = "";
+        boolean result = false;
         try{
         BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
-        result = brtype.toString();
+        result = brTypeService.createNewType(brtype);
         }
         catch(Exception e){
             System.out.print(e);
         }
-      return result;
+      return result+"";
     }
     @RequestMapping(value ="/type/{id}", method = RequestMethod.GET, produces = "application/json")
     public String getType(@PathVariable("id") int id) {

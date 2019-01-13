@@ -45,16 +45,20 @@ public class BusinessRuleTypeDeserializer extends StdDeserializer<BusinessRuleTy
 		}
 		for (int i = 0; i < JsonOperators.size(); i++) {
             JsonNode operator = JsonOperators.get(i) ;
-            System.out.println(operator.get("name"));
-            System.out.println(operator.get("action"));
-			possibleOperators.add(new Operator(operator.get("name").asText(), operator.get("action").asText()));
+            int id = 0;
+            if(operator.has("id")){
+                id = operator.get("id").asInt();
+    
+            }
+     
+			possibleOperators.add(new Operator(id,operator.get("name").asText(), operator.get("action").asText()));
         }
    
         
-        Category category = new Category(node.get("category").get("name").asText());
-        String id ="";
+        Category category = new Category(node.get("category").get("id").asInt(),node.get("category").get("name").asText());
+        int id =0;
         if(node.has("id")){
-            id = node.get("id").asText();
+            id = node.get("id").asInt();
 
         }
         BusinessRuleType arng = new BusinessRuleType(
@@ -67,7 +71,6 @@ public class BusinessRuleTypeDeserializer extends StdDeserializer<BusinessRuleTy
             possibleOperators, 
             parameters, 
             category);
-        System.out.print(arng);
         return arng;
     }
 }

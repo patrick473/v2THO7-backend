@@ -1,0 +1,36 @@
+{
+    "id": 1,
+    "name": "Attribute range rule",
+    "nameCode": "ARNG",
+    "explanation": "Value must be in or out range",
+    "example": "1 in 1,100",
+    "constraintPossible": true,
+    "possibleOperators": [
+        {
+            "name": "inRange",
+            "action": "x in (y,z)"
+        },
+        {
+            "name": "outRange",
+            "action": "x outside of (y,z)"
+        }
+    ],
+    "parameters": [
+        {
+            "parameter": "inRange",
+            "datatype": "boolean"
+        },
+        {
+            "parameter": "lowerRange",
+            "datatype": "any"
+        },
+        {
+            "parameter": "upperRange",
+            "datatype": "any"
+        }
+    ],
+    "category": {
+        "id": 1,
+        "name": "strict data constraint rule"
+    }
+}
