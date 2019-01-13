@@ -3,11 +3,17 @@ package App.model.businessrulebs;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import App.model.businessrulebs.Serializers.BusinessRuleTypeDeserializer;
+import App.model.businessrulebs.Serializers.BusinessRuleTypeSerializer;
 
 /**
  * BusinessRuleType
- */
+ */   
+@JsonSerialize(using = BusinessRuleTypeSerializer.class)
+@JsonDeserialize(using = BusinessRuleTypeDeserializer.class)
 public class BusinessRuleType {
 
     private String _id;
@@ -20,6 +26,7 @@ public class BusinessRuleType {
     private Map<String, String> _parameters;
     private Category _category;
 
+ 
     public BusinessRuleType(String id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
             ArrayList<Operator> possibleOperators, Map<String, String> parameters, Category category) {
                 
@@ -70,4 +77,18 @@ public class BusinessRuleType {
         return this._category;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+            " _id='" + id() + "'" +
+            ", _name='" + name() + "'" +
+            ", _nameCode='" + namecode() + "'" +
+            ", _explanation='" + explanation() + "'" +
+            ", _example='" + example() + "'" +
+            ", _constraintPossible='" + constraintpossible() + "'" +
+            ", _possibleOperators='" + possibleoperators() + "'" +
+            ", _parameters='" + parameters() + "'" +
+            ", _category='" + category() + "'" +
+            "}";
+    }
 }

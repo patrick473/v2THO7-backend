@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import App.model.businessrulebs.BusinessRuleType;
-import App.model.businessrulebs.Category;
 import App.model.businessrulebs.Operator;
 
 public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> {
@@ -33,17 +33,16 @@ public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> 
         jgen.writeBooleanField("constraintPossible", value.constraintpossible());
         jgen.writeArrayFieldStart("possibleOperators");
         for (Operator operator : value.possibleoperators()) {
-            jgen.writeObjectFieldStart("operator");
+            jgen.writeStartObject();
             jgen.writeStringField("name", operator.name());
             jgen.writeStringField("action", operator.action());
             jgen.writeEndObject();
         }
         jgen.writeEndArray();
-        
         jgen.writeArrayFieldStart("parameters");
         for ( Map.Entry<String,String> parameter : value.parameters().entrySet()) {
-            jgen.writeObjectFieldStart(parameter.getKey());
-            
+            jgen.writeStartObject();
+            jgen.writeStringField("parameter",parameter.getKey());
             jgen.writeStringField("datatype", parameter.getValue());
             jgen.writeEndObject();
         }
@@ -53,4 +52,5 @@ public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> 
         jgen.writeEndObject();
         jgen.writeEndObject();
     }
+    
 }
