@@ -25,7 +25,7 @@ public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> 
     public void serialize(BusinessRuleType value, JsonGenerator jgen, SerializerProvider provider) throws IOException,JsonProcessingException {
 
         jgen.writeStartObject();
-        jgen.writeStringField("id", value.id());
+        jgen.writeNumberField("id", value.id());
         jgen.writeStringField("name", value.name());
         jgen.writeStringField("nameCode", value.namecode());
         jgen.writeStringField("explanation", value.explanation());
@@ -34,6 +34,7 @@ public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> 
         jgen.writeArrayFieldStart("possibleOperators");
         for (Operator operator : value.possibleoperators()) {
             jgen.writeStartObject();
+            jgen.writeNumberField("id", operator.id());
             jgen.writeStringField("name", operator.name());
             jgen.writeStringField("action", operator.action());
             jgen.writeEndObject();
@@ -48,6 +49,7 @@ public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> 
         }
         jgen.writeEndArray();
         jgen.writeObjectFieldStart("category");
+        jgen.writeNumberField("id", value.category().id());
         jgen.writeStringField("name",value.category().name() );
         jgen.writeEndObject();
         jgen.writeEndObject();

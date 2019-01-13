@@ -16,7 +16,7 @@ import App.model.businessrulebs.Serializers.BusinessRuleTypeSerializer;
 @JsonDeserialize(using = BusinessRuleTypeDeserializer.class)
 public class BusinessRuleType {
 
-    private String _id;
+    private int _id;
     private String _name;
     private String _nameCode;
     private String _explanation;
@@ -27,7 +27,7 @@ public class BusinessRuleType {
     private Category _category;
 
  
-    public BusinessRuleType(String id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
+    public BusinessRuleType(int id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
             ArrayList<Operator> possibleOperators, Map<String, String> parameters, Category category) {
                 
         this._id = id;
@@ -42,7 +42,7 @@ public class BusinessRuleType {
     }
 
 
-    public String id() {
+    public int id() {
         return this._id;
     }
     public String name() {
