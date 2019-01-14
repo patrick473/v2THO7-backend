@@ -18,6 +18,7 @@ create table Employee (
     sex char(1) not null,
     jobtitle varchar2(255) not null,
     department number not null,
+    testnumber number not null,
     constraint fk_employee_department foreign key (department) references department(departmentID),
     constraint pk_employee primary key (employeeID)
 );

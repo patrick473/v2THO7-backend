@@ -25,6 +25,7 @@ INSERT INTO database(databasetype,name,username,password,host,schema,port) VALUE
 INSERT INTO targettable(database,name) VALUES(1,'department');
 INSERT INTO targettable(database,name) VALUES(1,'employee');
 INSERT INTO targettable(database,name) VALUES(1,'project');
+insert into TARGETTABLE(database,name) values(1,'workson');
 
 
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(1,'departmentid','number');
@@ -43,6 +44,7 @@ INSERT INTO targetcolumn(targettable,name,datatype) VALUES(2,'email','varchar2')
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(2,'sex','char');
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(2,'jobtitle','varchar2');
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(2,'department','number');
+insert into targetcolumn(targettable,name,datatype) values(2,'testnumber','number');
 
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(3,'projectid','number');
 INSERT INTO targetcolumn(targettable,name,datatype) VALUES(3,'name','varchar2');

@@ -1,5 +1,6 @@
-{
-    "id": 1,
+[
+    
+    {
     "name": "Attribute range rule",
     "nameCode": "ARNG",
     "explanation": "Value must be in or out range",
@@ -7,25 +8,25 @@
     "constraintPossible": true,
     "possibleOperators": [
         {
-            "name": "inRange",
-            "action": "x in (y,z)"
+            "name": "inrange",
+            "action": "between"
         },
         {
-            "name": "outRange",
-            "action": "x outside of (y,z)"
+            "name": "outrange",
+            "action": "not between"
         }
     ],
     "parameters": [
         {
-            "parameter": "inRange",
-            "datatype": "boolean"
+            "parameter":"column",
+            "datatype":"column"
         },
         {
-            "parameter": "lowerRange",
+            "parameter": "lowerrange",
             "datatype": "any"
         },
         {
-            "parameter": "upperRange",
+            "parameter": "higherrange",
             "datatype": "any"
         }
     ],
@@ -33,4 +34,11 @@
         "id": 1,
         "name": "strict data constraint rule"
     }
-}
+    
+},
+
+{
+    "sqldialect": 1,
+    "businessruletype": 1,
+    "template": "declare  \n l_passed boolean := true; \n begin \n if l_oper in ($happenon ) \n then \n -- $explanation \n l_passed := :new.$column $operator $lowerrange and $higherrange ; \n if not l_passed \n then \n l_error_stack := l_error_stack || '$error';\n end if; \n end if;\n end;"
+}]

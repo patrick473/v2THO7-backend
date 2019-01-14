@@ -39,7 +39,10 @@ public class BusinessRuleSerializer extends StdSerializer<BusinessRule> {
         jgen.writeEndArray();
         jgen.writeNumberField("type", value.type());
         jgen.writeNumberField("table", value.table());
-        
+        jgen.writeBooleanField("insert", value.insert());
+        jgen.writeBooleanField("update", value.update());
+        jgen.writeBooleanField("delete", value.delete());
+        jgen.writeStringField("error", value.error());
         jgen.writeEndObject();
     }
     
