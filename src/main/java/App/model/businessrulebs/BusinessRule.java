@@ -24,9 +24,13 @@ public class BusinessRule {
     private int _type;
     private boolean _constraint;
     private int _table;
+    private boolean _insert;
+    private boolean _update;
+    private boolean _delete;
+    private String _error;
 
     public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
-            BusinessRuleType type,boolean constraint, int table) {
+            BusinessRuleType type,boolean constraint, int table, boolean insert, boolean update, boolean delete, String error) {
         this._id = id;
         this._name = name;
         this._applied = applied;
@@ -35,9 +39,13 @@ public class BusinessRule {
         this._type = type.id();
         this._constraint = constraint;
         this._table = table;
+        this._insert = insert;
+        this._update = update;
+        this._delete = delete;
+        this._error = error;
     } 
     public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
-    int type,boolean constraint,int table) {
+    int type,boolean constraint,int table, boolean insert, boolean update, boolean delete, String error) {
         this._id = id;
         this._name = name;
         this._applied = applied;
@@ -46,6 +54,10 @@ public class BusinessRule {
         this._type = type;
         this._constraint = constraint;
         this._table = table;
+        this._insert = insert;
+        this._update = update;
+        this._delete = delete;
+        this._error = error;
 }
 
 
@@ -78,5 +90,18 @@ public class BusinessRule {
 
     public int table(){
         return this._table;
+    }
+
+    public boolean insert(){
+        return this._insert;
+    }
+    public boolean update(){
+        return this._update;
+    }
+    public boolean delete(){
+        return this._delete;
+    }
+    public String error(){
+        return this._error;
     }
 }

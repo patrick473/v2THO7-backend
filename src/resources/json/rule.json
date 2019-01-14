@@ -11,5 +11,9 @@
         }
     ],
     "type": 22,
-    "table": 1
+    "table": 1,
+    "insert": true,
+    "update": true,
+    "delete": true,
+    "error": ""
 }

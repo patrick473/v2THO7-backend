@@ -27,7 +27,7 @@ public class BusinessRuleService {
         bindings.put("inRange", "true");
         bindings.put("lowerRange", "1");
         bindings.put("upperRange","10");
-        BusinessRule arng = new BusinessRule(1, "br1", true,1, bindings, 22, false,1);
+        BusinessRule arng = new BusinessRule(1, "br1", true,1, bindings, 22, false,1,true,true,true,"error");
         return arng;
     }
 }
