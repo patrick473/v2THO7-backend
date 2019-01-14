@@ -1,21 +1,13 @@
 {
-    "id": 1,
-    "name": "br1",
+    "id": 0,
+    "name": "",
     "applied": true,
     "constraint": false,
     "operator": 1,
     "bindings": [
         {
-            "key": "inRange",
-            "value": "true"
-        },
-        {
-            "key": "lowerRange",
-            "value": "1"
-        },
-        {
-            "key": "upperRange",
-            "value": "10"
+            "key": "",
+            "value": ""
         }
     ],
     "type": 22,
