@@ -23,7 +23,6 @@ public class BusinessRuleTypeService {
     }
     public BusinessRuleType getRuleType(int id){
         BusinessruleTypeDAO brdao =  new BusinessruleTypeDAO();
-        brdao.getSomething();
         ArrayList<Operator> possibleOperators = new ArrayList<Operator>();
         possibleOperators.add(new Operator(1,"inRange", "x in (y,z)"));
         possibleOperators.add(new Operator(2,"outRange", "x outside of (y,z)"));

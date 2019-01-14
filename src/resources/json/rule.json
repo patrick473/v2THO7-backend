@@ -3,11 +3,7 @@
     "name": "br1",
     "applied": true,
     "constraint": false,
-    "operator": {
-        "id": 1,
-        "name": "name",
-        "action": "beep boop kill me"
-    },
+    "operator": 1,
     "bindings": [
         {
             "key": "inRange",

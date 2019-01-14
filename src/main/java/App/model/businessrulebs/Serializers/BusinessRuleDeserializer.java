@@ -43,14 +43,8 @@ public class BusinessRuleDeserializer extends StdDeserializer<BusinessRule> {
 		}
 
      
-            int opid = 0;
-            if(node.get("operator").has("id")){
-                opid = node.get("operator").get("id").asInt();
-    
-            }
      
-		Operator op = new Operator(opid,node.get("operator").get("name").asText(), node.get("operator").get("action").asText());
-        
+		
    
  
         int id =0;
@@ -58,7 +52,7 @@ public class BusinessRuleDeserializer extends StdDeserializer<BusinessRule> {
             id = node.get("id").asInt();
 
         }
-        BusinessRule arng = new BusinessRule(id, node.get("name").asText(), node.get("applied").asBoolean(), op, bindings, node.get("type").asInt(),node.get("constraint").asBoolean(),node.get("table").asInt());
+        BusinessRule arng = new BusinessRule(id, node.get("name").asText(), node.get("applied").asBoolean(), node.get("operator").asInt(), bindings, node.get("type").asInt(),node.get("constraint").asBoolean(),node.get("table").asInt());
         return arng;
     }
 }

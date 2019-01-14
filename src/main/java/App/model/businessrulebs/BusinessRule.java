@@ -19,13 +19,13 @@ public class BusinessRule {
     private int _id;
     private String _name;
     private boolean _applied;
-    private Operator _operator;
+    private int _operator;
     private Map<String, String> _bindings;
     private int _type;
     private boolean _constraint;
     private int _table;
 
-    public BusinessRule(int id, String name, boolean applied, Operator operator, Map<String, String> bindings,
+    public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
             BusinessRuleType type,boolean constraint, int table) {
         this._id = id;
         this._name = name;
@@ -36,7 +36,7 @@ public class BusinessRule {
         this._constraint = constraint;
         this._table = table;
     } 
-    public BusinessRule(int id, String name, boolean applied, Operator operator, Map<String, String> bindings,
+    public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
     int type,boolean constraint,int table) {
         this._id = id;
         this._name = name;
@@ -61,7 +61,7 @@ public class BusinessRule {
         return this._applied;
     }
 
-    public Operator operator() {
+    public int operator() {
         return this._operator;
     }
 

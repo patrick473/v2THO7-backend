@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import App.model.businessrulebs.BusinessRule;
-import App.model.businessrulebs.Operator;
 
 public class BusinessRuleSerializer extends StdSerializer<BusinessRule> {
     
@@ -29,12 +28,7 @@ public class BusinessRuleSerializer extends StdSerializer<BusinessRule> {
         jgen.writeStringField("name", value.name());
         jgen.writeBooleanField("applied", value.applied());
         jgen.writeBooleanField("constraint", value.constraint());
-        jgen.writeObjectFieldStart("operator");
-        jgen.writeNumberField("id", value.operator().id());
-        jgen.writeStringField("name", value.operator().name());
-        jgen.writeStringField("action", value.operator().action());
-        jgen.writeEndObject();
-
+        jgen.writeNumberField("operator", value.operator());
         jgen.writeArrayFieldStart("bindings");
         for ( Map.Entry<String,String> binding : value.bindings().entrySet()) {
             jgen.writeStartObject();
