@@ -6,51 +6,57 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
+import App.model.businessrulebs.BusinessRule;
 import App.model.businessrulebs.BusinessRuleType;
 import App.model.businessrulebs.Operator;
 
 /**
  * BusinessruleTypeDAO
  */
-public class BusinessruleTypeDAO {
+public class BusinessruleDAO {
 
     private JDBCSingleton jdbcInstance;
-    private OperatorDAO odao;
-    private ParameterDAO pdao;
-    public BusinessruleTypeDAO(){
+    private BindingDAO bdao;
+    public BusinessruleDAO(){
         this.jdbcInstance = JDBCSingleton.getInstance();
-        this.odao = new OperatorDAO();
-        this.pdao = new ParameterDAO();
+        this.bdao = new BindingDAO();
+        
     }
 
-    public boolean createBusinessruleType(BusinessRuleType brtype){
+    public boolean createBusinessrule(BusinessRule br){
         try{
             Connection con = this.jdbcInstance.getConnection();
 
-            String statement = "insert into businessruletype(category,name,namecode,explanation,example,constraintpossible) values(?,?,?,?,?,?)";
+            String statement = "insert into businessrule(targettable,businessruletype,name,operator,applied,constraint) values(?,?,?,?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, brtype.category().id());
-            pstmt.setString(2, brtype.name());
-            pstmt.setString(3, brtype.namecode());
-            pstmt.setString(4, brtype.explanation());
-            pstmt.setString(5, brtype.example());
-            if(brtype.constraintpossible()){
+            pstmt.setInt(1, br.table());
+            pstmt.setInt(2, br.type());
+            pstmt.setString(3, br.name());
+            System.out.print(br.operator());
+            pstmt.setInt(4, br.operator());
+            if(br.applied()){
+                pstmt.setString(5, "1");
+            }
+            else{
+                pstmt.setString(5, "0");
+            }  
+            if(br.constraint()){
                 pstmt.setString(6, "1");
             }
             else{
                 pstmt.setString(6, "0");
             }
+
             int amount = pstmt.executeUpdate();
             
-            int id = this.findID(brtype.name());
+            int id = this.findID(br.name());
 
+            for ( Map.Entry<String,String> parameter : br.bindings().entrySet()) {
+                this.bdao.createBinding(id, parameter.getKey(), parameter.getValue());
+            }
             System.out.print(id);
-            for (Operator op : brtype.possibleoperators()) {
-                this.odao.createOperator(id, op);
-            }
-            for ( Map.Entry<String,String> parameter : brtype.parameters().entrySet()) {
-                this.pdao.createParameter(id, parameter.getKey(), parameter.getValue());
-            }
+           
+    
             con.close();
             return amount > 0;
         }catch(Exception e) {
@@ -63,7 +69,7 @@ public class BusinessruleTypeDAO {
         try{
             Connection con = this.jdbcInstance.getConnection();
     
-            PreparedStatement stmt = con.prepareStatement("select id from businessruletype where name=?");
+            PreparedStatement stmt = con.prepareStatement("select id from businessrule where name=?");
             stmt.setString(1, name);
     
             ResultSet rs = stmt.executeQuery();
