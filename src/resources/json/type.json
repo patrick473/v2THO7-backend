@@ -1,0 +1,25 @@
+{
+    "id": 1,
+    "name": "",
+    "nameCode": "",
+    "explanation": "",
+    "example": "",
+    "constraintPossible": true,
+    "possibleOperators": [
+        {
+            "name": "",
+            "action": ""
+        }
+       
+    ],
+    "parameters": [
+        {
+            "parameter": "",
+            "datatype": ""
+        }
+    ],
+    "category": {
+        "id": 1,
+        "name": ""
+    }
+}

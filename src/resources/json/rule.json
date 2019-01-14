@@ -1,0 +1,27 @@
+{
+    "id": 1,
+    "name": "br1",
+    "applied": true,
+    "constraint": false,
+    "operator": {
+        "id": 1,
+        "name": "name",
+        "action": "beep boop kill me"
+    },
+    "bindings": [
+        {
+            "key": "inRange",
+            "value": "true"
+        },
+        {
+            "key": "lowerRange",
+            "value": "1"
+        },
+        {
+            "key": "upperRange",
+            "value": "10"
+        }
+    ],
+    "type": 22,
+    "table": 1
+}

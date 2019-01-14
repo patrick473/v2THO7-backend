@@ -21,7 +21,7 @@ public class BusinessRuleTypeService {
         return brtypedao.createBusinessruleType(brType);
        
     }
-    public BusinessRuleType getRule(int id){
+    public BusinessRuleType getRuleType(int id){
         BusinessruleTypeDAO brdao =  new BusinessruleTypeDAO();
         brdao.getSomething();
         ArrayList<Operator> possibleOperators = new ArrayList<Operator>();
