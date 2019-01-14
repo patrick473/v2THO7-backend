@@ -2,7 +2,7 @@ package App.model.databasebs;
 
 import java.util.ArrayList;
 
-import App.model.templatebs.DatabaseType;
+
 
 public class Database {
 

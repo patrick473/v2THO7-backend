@@ -40,5 +40,8 @@
 {
     "sqldialect": 1,
     "businessruletype": 1,
-    "template": "declare  \n l_passed boolean := true; \n begin \n if l_oper in ($happenon ) \n then \n -- $explanation \n l_passed := :new.$column $operator $lowerrange and $higherrange ; \n if not l_passed \n then \n l_error_stack := l_error_stack || '$error';\n end if; \n end if;\n end;"
-}]
+    "template": "declare  \n l_passed boolean := true; \n begin \n if l_oper in ($happenon ) \n then \n -- $explanation \n l_passed := :new.$column $operator $lowerrange and $higherrange ; \n if not l_passed \n then \n l_error_stack := l_error_stack || '$error';\n end if; \n end if;\n end;",
+    "isconstraint": false
+}
+
+]
