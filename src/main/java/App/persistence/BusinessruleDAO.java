@@ -16,10 +16,10 @@ import App.model.businessrulebs.Operator;
 public class BusinessruleDAO {
 
     private JDBCSingleton jdbcInstance;
-    private OperatorDAO odao;
-    private ParameterDAO pdao;
+    private BindingDAO bdao;
     public BusinessruleDAO(){
         this.jdbcInstance = JDBCSingleton.getInstance();
+        this.bdao = new BindingDAO();
         
     }
 
@@ -51,6 +51,9 @@ public class BusinessruleDAO {
             
             int id = this.findID(br.name());
 
+            for ( Map.Entry<String,String> parameter : br.bindings().entrySet()) {
+                this.bdao.createBinding(id, parameter.getKey(), parameter.getValue());
+            }
             System.out.print(id);
            
     
