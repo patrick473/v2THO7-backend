@@ -1,6 +1,7 @@
 package App.services;
 
 import App.model.templatebs.Template;
+import App.persistence.TemplateDAO;
 
 /**
  * TemplateService
@@ -8,12 +9,14 @@ import App.model.templatebs.Template;
 public class TemplateService {
 
     public boolean createNewTemplate(Template template){
-        System.out.print(template.templatestring());
-        return true;
+        TemplateDAO tdao = new TemplateDAO();
+        boolean success = tdao.createTemplate(template);
+        return success;
+       
     }
     public Template getTemplate(int id){
 
-        Template template = new Template(1, 1, 1, "TEMPLATE");
+        Template template = new Template(1, 1, 1, "TEMPLATE",false);
         return template;
     }
 }

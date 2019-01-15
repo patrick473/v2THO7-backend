@@ -1,4 +1,4 @@
-package App.model.templatebs;
+package App.model.databasebs;
 
 /**
  * DatabaseType
