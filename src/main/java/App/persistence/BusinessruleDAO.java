@@ -46,19 +46,19 @@ public class BusinessruleDAO {
                 pstmt.setString(6, "0");
             }
 
-            if (br.constraint()) {
+            if (br.insert()) {
                 pstmt.setString(7, "1");
             } else {
                 pstmt.setString(7, "0");
             }
 
-            if (br.constraint()) {
+            if (br.update()) {
                 pstmt.setString(8, "1");
             } else {
                 pstmt.setString(8, "0");
             }
 
-            if (br.constraint()) {
+            if (br.delete()) {
                 pstmt.setString(9, "1");
             } else {
                 pstmt.setString(9, "0");
