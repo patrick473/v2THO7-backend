@@ -1,4 +1,4 @@
-package App.model.businessrulebs;
+package App.model.templatebs;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import App.model.businessrulebs.Serializers.BusinessRuleTypeDeserializer;
-import App.model.businessrulebs.Serializers.BusinessRuleTypeSerializer;
+import App.model.templatebs.serializers.BusinessRuleTypeDeserializer;
+import App.model.templatebs.serializers.BusinessRuleTypeSerializer;
 
 /**
  * BusinessRuleType
@@ -27,6 +27,7 @@ public class BusinessRuleType {
     private Category _category;
 
  
+    public BusinessRuleType(){}
     public BusinessRuleType(int id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
             ArrayList<Operator> possibleOperators, Map<String, String> parameters, Category category) {
                 

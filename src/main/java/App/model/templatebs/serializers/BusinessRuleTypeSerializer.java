@@ -1,4 +1,4 @@
-package App.model.businessrulebs.Serializers;
+package App.model.templatebs.serializers;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,8 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-import App.model.businessrulebs.BusinessRuleType;
-import App.model.businessrulebs.Operator;
+import App.model.templatebs.BusinessRuleType;
+import App.model.templatebs.Operator;
 
 public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> {
     

@@ -6,20 +6,25 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import App.model.businessrulebs.BusinessRuleType;
-import App.model.businessrulebs.Category;
-import App.model.businessrulebs.Operator;
+import App.model.templatebs.BusinessRuleType;
+import App.model.templatebs.Category;
+import App.model.templatebs.Operator;
 import App.persistence.BusinessruleTypeDAO;
 
 /**
  * BusinessRuleTypeService
  */
 public class BusinessRuleTypeService {
+    private BusinessruleTypeDAO brtypedao = new BusinessruleTypeDAO();
 
     public boolean createNewType(BusinessRuleType brType){
-        BusinessruleTypeDAO brtypedao = new BusinessruleTypeDAO();
-        return brtypedao.createBusinessruleType(brType);
+        
+        System.out.print('2');
+        return this.brtypedao.createBusinessruleType(brType);
        
+    }
+    public ArrayList<BusinessRuleType> getAllTypes() {
+        return this.brtypedao.getAllTypes();
     }
     public BusinessRuleType getRuleType(int id){
         BusinessruleTypeDAO brdao =  new BusinessruleTypeDAO();

@@ -1,4 +1,4 @@
-package App.model.businessrulebs;
+package App.model.templatebs;
 
 /**
  * Operator
@@ -9,6 +9,7 @@ public class Operator {
     private String _name;
     private String _action;
 
+    public Operator(){};
     public Operator(int id,String name, String action){
         this._id = id;
         this._name = name;

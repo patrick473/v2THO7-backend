@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import App.model.businessrulebs.BusinessRuleType;
-import App.model.businessrulebs.Category;
-import App.model.businessrulebs.Operator;
+import App.model.templatebs.BusinessRuleType;
+import App.model.templatebs.Category;
+import App.model.templatebs.Operator;
 import App.services.BusinessRuleTypeService;
 
 
@@ -31,7 +31,22 @@ public class BusinessRuleTypeController{
         boolean result = false;
         try{
         BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
+       
         result = brTypeService.createNewType(brtype);
+        System.out.print(result + "result");
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
+      return result+"";
+    }
+    @RequestMapping(value ="/type/all", method = RequestMethod.GET, produces = "application/json")
+    public String getAllTypes(){
+        ArrayList<String> result = new ArrayList<String>();
+        try{
+       
+        ArrayList<BusinessRuleType> types = brTypeService.getAllTypes();
+        System.out.print(result + "result");
         }
         catch(Exception e){
             System.out.print(e);

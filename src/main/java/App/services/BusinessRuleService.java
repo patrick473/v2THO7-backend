@@ -6,9 +6,9 @@ import java.util.Map;
 
 import App.model.businessrulebs.BusinessRule;
 
-import App.model.businessrulebs.Operator;
+
 import App.persistence.BusinessruleDAO;
-import App.persistence.BusinessruleTypeDAO;
+
 
 /**
  * BusinessRuleTypeService

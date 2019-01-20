@@ -15,8 +15,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import App.model.businessrulebs.BusinessRule;
-import App.model.businessrulebs.Category;
-import App.model.businessrulebs.Operator;
+
 
 public class BusinessRuleDeserializer extends StdDeserializer<BusinessRule> {
 

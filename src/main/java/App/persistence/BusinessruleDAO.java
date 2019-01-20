@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Map;
 
 import App.model.businessrulebs.BusinessRule;
-import App.model.businessrulebs.BusinessRuleType;
-import App.model.businessrulebs.Operator;
+
 
 /**
  * BusinessruleTypeDAO
@@ -82,6 +82,7 @@ public class BusinessruleDAO {
         }
     }
 
+ 
     private int findID(String name) {
         try {
             Connection con = this.jdbcInstance.getConnection();
@@ -103,5 +104,7 @@ public class BusinessruleDAO {
             return 0;
         }
     }
+
+
 
 }

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import App.model.businessrulebs.Serializers.BusinessRuleDeserializer;
 import App.model.businessrulebs.Serializers.BusinessRuleSerializer;
+import App.model.templatebs.BusinessRuleType;
 
 
 /**
