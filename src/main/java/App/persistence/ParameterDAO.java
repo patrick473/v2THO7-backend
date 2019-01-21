@@ -12,21 +12,22 @@ import java.util.Map;
 public class ParameterDAO {
 
     JDBCSingleton jdbcInstance;
+
     public ParameterDAO() {
         this.jdbcInstance = JDBCSingleton.getInstance();
     }
 
-    public boolean createParameter(int brtypeid,String key,String value) {
+    public boolean createParameter(int brtypeid, String key, String value) {
 
         try {
             Connection con = this.jdbcInstance.getConnection();
             String statement = "insert into parameter(businessruletype,key,value) values(?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(statement);
-            pstmt.setInt(1,brtypeid);
-            pstmt.setString(2,key);
+            pstmt.setInt(1, brtypeid);
+            pstmt.setString(2, key);
             pstmt.setString(3, value);
             int amount = pstmt.executeUpdate();
-           ;
+            ;
             con.close();
             return amount > 0;
         } catch (Exception e) {
@@ -34,17 +35,18 @@ public class ParameterDAO {
             return false;
         }
     }
-    public Map<String,String> getParameters(int id){
-        Map<String,String> parameters = new HashMap<String,String>();
+
+    public Map<String, String> getParameters(int id) {
+        Map<String, String> parameters = new HashMap<String, String>();
         try {
             Connection con = this.jdbcInstance.getConnection();
             PreparedStatement pstmt = con.prepareStatement("select * from parameter where businessruletype = ?");
-           
+            pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                
-                parameters.put(rs.getString(3),rs.getString(4));
+
+                parameters.put(rs.getString(3), rs.getString(4));
             }
 
             con.close();

@@ -1,12 +1,9 @@
 package App.controllers;
 
-
-
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,52 +18,69 @@ import App.model.templatebs.Category;
 import App.model.templatebs.Operator;
 import App.services.BusinessRuleTypeService;
 
-
 @RestController
-public class BusinessRuleTypeController{
+public class BusinessRuleTypeController {
     BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
 
-    @RequestMapping(value ="/type", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
-    public String newType(@RequestBody String jsonString){
+    @RequestMapping(value = "/type", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
+    public String newType(@RequestBody String jsonString) {
         boolean result = false;
-        try{
-        BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
-       
-        result = brTypeService.createNewType(brtype);
-        System.out.print(result + "result");
-        }
-        catch(Exception e){
+        try {
+            BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
+
+            result = brTypeService.createNewType(brtype);
+            System.out.print(result + "result");
+        } catch (Exception e) {
             System.out.print(e);
         }
-      return result+"";
+        return result + "";
     }
-    @RequestMapping(value ="/type/all", method = RequestMethod.GET, produces = "application/json")
-    public String getAllTypes(){
+
+    @RequestMapping(value = "/type", method = RequestMethod.PUT, produces = "application/text", consumes = "application/json")
+    public String updateType(@RequestBody String jsonString) {
+        boolean result = false;
+        try {
+            BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
+
+            result = brTypeService.updateType(brtype);
+            System.out.print(result + "result");
+        } catch (Exception e) {
+            System.out.print(e);
+        }
+        return result + "";
+    }
+
+    @RequestMapping(value = "/type/all", method = RequestMethod.GET, produces = "application/json")
+    public String getAllTypes() {
         ArrayList<String> result = new ArrayList<String>();
-        try{
-       
-        ArrayList<BusinessRuleType> types = brTypeService.getAllTypes();
-        System.out.print(result + "result");
-        }
-        catch(Exception e){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+
+            ArrayList<BusinessRuleType> types = brTypeService.getAllTypes();
+
+            for (BusinessRuleType type : types) {
+                result.add(mapper.writeValueAsString(type));
+            }
+
+        } catch (Exception e) {
             System.out.print(e);
         }
-      return result+"";
+        return result + "";
     }
-    @RequestMapping(value ="/type/{id}", method = RequestMethod.GET, produces = "application/json")
+
+    @RequestMapping(value = "/type/{id}", method = RequestMethod.GET, produces = "application/json")
     public String getType(@PathVariable("id") int id) {
 
         String result = "";
         ObjectMapper mapper = new ObjectMapper();
         BusinessRuleType brType = brTypeService.getRuleType(id);
         try {
-        result = mapper.writeValueAsString(brType);
-        
-        }
-        catch(Exception e){
+            result = mapper.writeValueAsString(brType);
+
+        } catch (Exception e) {
             System.out.print(e);
         }
-        
+
         return result;
     }
 

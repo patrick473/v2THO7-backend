@@ -38,8 +38,8 @@ public class OperatorDAO {
             }
             String statement = "insert into operatoronbusinessruletype(businessruletype,operator) values(?,?)";
             PreparedStatement pstmt = con.prepareStatement(statement);
-            pstmt.setInt(1,brtypeid);
-            pstmt.setInt(2,id);
+            pstmt.setInt(1, brtypeid);
+            pstmt.setInt(2, id);
             int amount = pstmt.executeUpdate();
             System.out.print(id);
             con.close();
@@ -49,17 +49,19 @@ public class OperatorDAO {
             return false;
         }
     }
-    public ArrayList<Operator> getOperators(int businessruletype){
+
+    public ArrayList<Operator> getOperators(int businessruletype) {
         ArrayList<Operator> operators = new ArrayList<Operator>();
         ArrayList<Integer> operatorids = new ArrayList<Integer>();
         try {
             Connection con = this.jdbcInstance.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("select operator from operatoronbusinessruletype where businessruletype = ?");
-           
+            PreparedStatement pstmt = con
+                    .prepareStatement("select operator from operatoronbusinessruletype where businessruletype = ?");
+            pstmt.setInt(1, businessruletype);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-               operatorids.add(rs.getInt(1));
+                operatorids.add(rs.getInt(1));
             }
             for (Integer opid : operatorids) {
                 operators.add(this.getOperator(opid));
@@ -71,24 +73,41 @@ public class OperatorDAO {
         }
         return operators;
     }
-   public Operator getOperator(int id){
+
+    public Operator getOperator(int id) {
         Operator operator = new Operator();
         try {
             Connection con = this.jdbcInstance.getConnection();
             PreparedStatement pstmt = con.prepareStatement("select * from operator where id = ?");
+            pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                
-               operator = new Operator(id, rs.getString(2), rs.getString(3));
+
+                operator = new Operator(id, rs.getString(2), rs.getString(3));
             }
-            
+
             con.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return operator;
     }
+
+    public int deleteOperatorsByBusinessruleType(int type) {
+        int result = 0;
+        try {
+            Connection con = this.jdbcInstance.getConnection();
+            PreparedStatement pstmt = con
+                    .prepareStatement("delete from operatoronbusinessruletype where businessruletype=?");
+            pstmt.setInt(1, type);
+            result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     private int findID(String name) {
         try {
             Connection con = this.jdbcInstance.getConnection();
