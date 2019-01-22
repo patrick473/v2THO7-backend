@@ -28,7 +28,7 @@ every response is structured as follows
 ``` json
 {
     "message": "identifier",
-    "object": object/array
+    "object": "object/array"
     
 }
 ```
