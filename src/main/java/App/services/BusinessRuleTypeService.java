@@ -17,12 +17,13 @@ import App.persistence.BusinessruleTypeDAO;
 public class BusinessRuleTypeService {
     private BusinessruleTypeDAO brtypedao = new BusinessruleTypeDAO();
 
-    public BusinessRuleType createNewType(BusinessRuleType brType) {
-        int id = this.brtypedao.createBusinessruleType(brType); 
-        if(id != 0 ){
-            brType.setID(id);
-        };
-        return brType;
+    public boolean createNewType(BusinessRuleType brType) {
+        if(this.brtypedao.createBusinessruleType(brType)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public BusinessRuleType updateType(BusinessRuleType brType) {

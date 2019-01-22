@@ -22,7 +22,7 @@ import App.services.BusinessRuleTypeService;
 
 @RestController
 public class BusinessRuleTypeController {
-    BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
+    private BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
 
     @RequestMapping(value = "/type", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public ResponseEntity newType(@RequestBody String jsonString) {
@@ -30,11 +30,11 @@ public class BusinessRuleTypeController {
         try {
             BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
             result = brTypeService.createNewType(brtype);
-            if(result == true) {
-                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}")
+            if(result) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
             }
-            else if(result == false) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
             }
         } catch (Exception e) {
             System.out.print(e);

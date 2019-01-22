@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.ArrayList;
 
 import App.model.businessrulebs.BusinessRule;
-import App.model.templatebs.businessRuleType;
+import App.model.templatebs.BusinessRuleType;
+import App.model.templatebs.Operator;
 
 
 import App.persistence.BusinessruleDAO;
@@ -41,7 +42,7 @@ public class BusinessRuleService {
         BusinessRuleTypeService typeservice = new BusinessRuleTypeService();
         BusinessRuleType type  = typeservice.getSingleType(br.type());
 
-        if(validateConstraintInput(type.constraintpossible, br.constraint) && validateOperatorInput(type.possibleoperators, br.operator)) {
+        if(validateConstraintInput(type.constraintpossible(), br.constraint()) && validateOperatorInput(type.possibleoperators(), br.operator())) {
             return true;
         }
         else {
@@ -59,8 +60,19 @@ public class BusinessRuleService {
     }
 
     //Check if provided binding match the required parameters for the businessrule type & and match the required type
-    public boolean validateBindingInput(Map<String, String> allowedParameters Map<String, String> bindingsInput) {
+    public boolean validateBindingInput(Map<String, String> allowedParameters, Map<String, String> bindingsInput) {
+        if(allowedParameters.size() == bindingsInput.size()) {
+            for(Map.Entry<String, String> allowedParameter : allowedParameters.entrySet()) {
+                if(!bindingsInput.containsKey(allowedParameter.getKey())) {
+                    return false;
+                }
+            }
 
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     //Check if Rule is allowed to be a constraint
@@ -69,7 +81,7 @@ public class BusinessRuleService {
             return true;
         }
         else {
-            false;
+            return false;
         }
     }
 }

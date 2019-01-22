@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import App.model.businessrulebs.BusinessRule;
 import App.services.BusinessRuleService;
@@ -16,7 +18,7 @@ import App.services.BusinessRuleService;
 
 @RestController
 public class BusinessRuleController{
-    BusinessRuleService brService = new BusinessRuleService();
+    private BusinessRuleService brService = new BusinessRuleService();
 
     @RequestMapping(value ="/rule", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
     public ResponseEntity newRule(@RequestBody String jsonString){
@@ -25,7 +27,7 @@ public class BusinessRuleController{
             BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
             result = brService.createNewRule(br);
             if(result == true) {
-                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}")
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
             }
             else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
@@ -43,7 +45,12 @@ public class BusinessRuleController{
         ObjectMapper mapper = new ObjectMapper();
         BusinessRule brType = brService.getRule(id);
         try {
-        result = mapper.writeValueAsString(brType);
+            if(brType != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
+            }
         
         }
         catch(Exception e){
