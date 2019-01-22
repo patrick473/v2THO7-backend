@@ -22,15 +22,14 @@ public class BusinessRuleController{
 
     @RequestMapping(value ="/rule", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
     public ResponseEntity newRule(@RequestBody String jsonString){
-        boolean result = false;
         try{
             BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
-            result = brService.createNewRule(br);
-            if(result == true) {
+            BusinessRule result = brService.createNewRule(br);
+            if(result != null) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
             }
             else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
             }
         }
         catch(Exception e){
@@ -49,7 +48,7 @@ public class BusinessRuleController{
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
             }
             else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
             }
         
         }

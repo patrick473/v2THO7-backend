@@ -18,14 +18,16 @@ import App.persistence.BusinessruleDAO;
  */
 public class BusinessRuleService {
 
-    public boolean createNewRule(BusinessRule br){
+    public BusinessRule createNewRule(BusinessRule br){
         BusinessruleDAO brdao = new BusinessruleDAO();
         if(validateBusinessRuleInput(br)) {
-            return brdao.createBusinessrule(br);
+            if(brdao.createBusinessrule(br)) {
+                return br;
+            }
         }
-        else {
-            return false;
-        }
+
+        return null;
+
     }
     public BusinessRule getRule(int id){
         

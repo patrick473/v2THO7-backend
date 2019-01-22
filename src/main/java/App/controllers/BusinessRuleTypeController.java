@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import App.model.businessrulebs.BusinessRule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
@@ -26,15 +27,14 @@ public class BusinessRuleTypeController {
 
     @RequestMapping(value = "/type", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public ResponseEntity newType(@RequestBody String jsonString) {
-        boolean result = false;
         try {
             BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
-            result = brTypeService.createNewType(brtype);
-            if(result) {
+            BusinessRuleType result = brTypeService.createNewType(brtype);
+            if(result != null) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
             }
             else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
             }
         } catch (Exception e) {
             System.out.print(e);

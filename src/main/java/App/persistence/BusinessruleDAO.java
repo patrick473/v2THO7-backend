@@ -65,17 +65,20 @@ public class BusinessruleDAO {
             }
             pstmt.setString(10, br.error());
 
-            int amount = pstmt.executeUpdate();
-
             int id = this.findID(br.name());
 
             for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
                 this.bdao.createBinding(id, binding.getKey(), binding.getValue());
             }
-            System.out.print(id);
 
-            con.close();
-            return amount > 0;
+            if(pstmt.executeUpdate() == 1) {
+                con.close();
+                return true;
+            }
+            else{
+                con.close();
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
