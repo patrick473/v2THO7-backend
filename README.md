@@ -14,13 +14,35 @@
   </tr>
 </table>
 
+## installation guide
+
+### dependencies
+ - A java JDK
+ - Maven
+
+to start the server run the script in the startscript.txt file in the root folder.
+## general
+
+every response is structured as follows
+
+``` json
+{
+    "message": "identifier",
+    "object": object/array
+    
+}
+```
+the tables in the next section describes the object part or the json body that needs to be given to the endpoint in the case of POST/PUT
+## endpoints
+<br>
 
 ``` 
 /type
 ```
+
 `PUT `
 <br>
-paramters
+json body/response
 <table>
 <tr>
     <th>veld</th>
@@ -107,7 +129,7 @@ paramters
 
 `POST `
 <br>
-parameters
+json body/response
 <table>
 <tr>
     <th>veld</th>
@@ -115,6 +137,11 @@ parameters
     <th>omschrijving</th>
   </tr>
 
+ <tr>
+    <td>id (only response)</td>
+    <td>number</td> 
+    <td>id van de gedefinieerde ruletype</td>
+  </tr>
   <tr>
     <td>name</td>
     <td>string</td> 
@@ -363,3 +390,9 @@ results
     <td>naam van de category</td>
   </tr>
 </table>
+
+`DELETE `
+
+results
+<br>
+no body or object to be given
