@@ -127,12 +127,20 @@ public class BusinessRuleTypeController {
         
     }
     @RequestMapping(value = "/type/{id}", method = RequestMethod.DELETE)
-    public String deleteType(@PathVariable("id") int id) {
+    public ResponseEntity deleteType(@PathVariable("id") int id) {
 
         
         ObjectMapper mapper = new ObjectMapper();
         boolean result = brTypeService.deleteType(id);
        
-        return result + "";
+        if(result){
+            return ResponseEntity
+            .status(HttpStatus.OK)
+            .body("{\"message\":\"Succes\",\"object\":{}}");
+        }
+
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body("{\"message\":\"Object not found\",\"object\":{}}");
     }
 }
