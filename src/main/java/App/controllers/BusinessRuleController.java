@@ -19,19 +19,25 @@ public class BusinessRuleController{
     BusinessRuleService brService = new BusinessRuleService();
 
     @RequestMapping(value ="/rule", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
-    public String newType(@RequestBody String jsonString){
+    public ResponseEntity newRule(@RequestBody String jsonString){
         boolean result = false;
         try{
-        BusinessRule brtype = new ObjectMapper().readValue(jsonString, BusinessRule.class);
-        result = brService.createNewRule(brtype);
+        BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
+        result = brService.createNewRule(br);
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+                .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}")
         }
         catch(Exception e){
             System.out.print(e);
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
-      return result+"";
     }
     @RequestMapping(value ="/rule/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String getType(@PathVariable("id") int id) {
+    public String getRule(@PathVariable("id") int id) {
 
         String result = "";
         ObjectMapper mapper = new ObjectMapper();
