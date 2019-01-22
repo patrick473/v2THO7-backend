@@ -39,7 +39,7 @@ public class BusinessRuleTypeController {
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
       
@@ -64,7 +64,7 @@ public class BusinessRuleTypeController {
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
         
@@ -95,7 +95,7 @@ public class BusinessRuleTypeController {
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
         
@@ -120,7 +120,7 @@ public class BusinessRuleTypeController {
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
 

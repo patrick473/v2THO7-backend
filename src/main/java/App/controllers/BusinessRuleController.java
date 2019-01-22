@@ -24,22 +24,22 @@ public class BusinessRuleController{
         try{
         BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
         result = brService.createNewRule(br);
-
-        return ResponseEntity
-            .status(HttpStatus.OK)
-                .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}")
+            if(result == true) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}")
+            }
+            else if(result == false) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
+            }
         }
         catch(Exception e){
             System.out.print(e);
             return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
     }
     @RequestMapping(value ="/rule/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String getRule(@PathVariable("id") int id) {
-
-        String result = "";
+    public ResponseEntity getRule(@PathVariable("id") int id) {
         ObjectMapper mapper = new ObjectMapper();
         BusinessRule brType = brService.getRule(id);
         try {
@@ -48,9 +48,10 @@ public class BusinessRuleController{
         }
         catch(Exception e){
             System.out.print(e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
-        
-        return result;
     }
 
 }
