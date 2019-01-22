@@ -19,9 +19,9 @@ public class OperatorDAO {
         this.jdbcInstance = JDBCSingleton.getInstance();
     }
 
-    public boolean createOperator(int brtypeid, Operator op) {
+    public boolean createOperator(int brtypeid, Operator op, Connection con) {
         try {
-            Connection con = this.jdbcInstance.getConnection();
+            
 
             Statement query = con.createStatement();
             ResultSet rs1 = query.executeQuery("select * from operator where name = '" + op.name() + "'");
@@ -42,7 +42,7 @@ public class OperatorDAO {
             pstmt.setInt(2, id);
             int amount = pstmt.executeUpdate();
             System.out.print(id);
-            con.close();
+            
             return amount > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,11 +50,11 @@ public class OperatorDAO {
         }
     }
 
-    public ArrayList<Operator> getOperators(int businessruletype) {
+    public ArrayList<Operator> getOperators(int businessruletype, Connection con) {
         ArrayList<Operator> operators = new ArrayList<Operator>();
         ArrayList<Integer> operatorids = new ArrayList<Integer>();
         try {
-            Connection con = this.jdbcInstance.getConnection();
+           
             PreparedStatement pstmt = con
                     .prepareStatement("select operator from operatoronbusinessruletype where businessruletype = ?");
             pstmt.setInt(1, businessruletype);
@@ -67,7 +67,7 @@ public class OperatorDAO {
                 operators.add(this.getOperator(opid));
             }
 
-            con.close();
+           
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,10 +94,10 @@ public class OperatorDAO {
         return operator;
     }
 
-    public int deleteOperatorsByBusinessruleType(int type) {
+    public int deleteOperatorsByBusinessruleType(int type, Connection con) {
         int result = 0;
         try {
-            Connection con = this.jdbcInstance.getConnection();
+            
             PreparedStatement pstmt = con
                     .prepareStatement("delete from operatoronbusinessruletype where businessruletype=?");
             pstmt.setInt(1, type);

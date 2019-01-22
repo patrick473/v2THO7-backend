@@ -46,6 +46,9 @@ public class BusinessRuleType {
     public int id() {
         return this._id;
     }
+    public void setID(int id){
+        this._id = id;
+    }
     public String name() {
         return this._name;
     }

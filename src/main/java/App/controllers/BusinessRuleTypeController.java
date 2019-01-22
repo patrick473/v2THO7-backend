@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,36 +24,56 @@ import App.services.BusinessRuleTypeService;
 public class BusinessRuleTypeController {
     BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
 
-    @RequestMapping(value = "/type", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
-    public String newType(@RequestBody String jsonString) {
+    @RequestMapping(value = "/type", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
+    public ResponseEntity newType(@RequestBody String jsonString) {
         boolean result = false;
         try {
             BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
 
-            result = brTypeService.createNewType(brtype);
+
+            brtype = brTypeService.createNewType(brtype);
             System.out.print(result + "result");
+            return ResponseEntity
+            .status(HttpStatus.OK)
+            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
         } catch (Exception e) {
             System.out.print(e);
+            return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
-        return result + "";
+      
     }
 
-    @RequestMapping(value = "/type", method = RequestMethod.PUT, produces = "application/text", consumes = "application/json")
-    public String updateType(@RequestBody String jsonString) {
-        boolean result = false;
+    @RequestMapping(value = "/type", method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
+    public ResponseEntity updateType(@RequestBody String jsonString) {
+        
         try {
             BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
 
-            result = brTypeService.updateType(brtype);
-            System.out.print(result + "result");
+            brtype = brTypeService.updateType(brtype);
+            
+            if (brtype.id() == 0){
+                return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body("{\"message\":\"Object not found\",\"object\":{}}");
+            }
+            return ResponseEntity
+            .status(HttpStatus.OK)
+            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
         } catch (Exception e) {
             System.out.print(e);
+            return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
-        return result + "";
+        
     }
+
+   
 
     @RequestMapping(value = "/type/all", method = RequestMethod.GET, produces = "application/json")
-    public String getAllTypes() {
+    public ResponseEntity getAllTypes() {
         ArrayList<String> result = new ArrayList<String>();
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -61,27 +83,56 @@ public class BusinessRuleTypeController {
             for (BusinessRuleType type : types) {
                 result.add(mapper.writeValueAsString(type));
             }
-
+            if(result.isEmpty()){
+                return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body("{\"message\":\"No objects found\",\"object\":{}}");
+            }
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("{\"message\":\"success\",\"object\":"+result+"}");
+              
         } catch (Exception e) {
             System.out.print(e);
+            return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
-        return result + "";
+        
     }
 
     @RequestMapping(value = "/type/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String getType(@PathVariable("id") int id) {
+    public ResponseEntity getType(@PathVariable("id") int id) {
 
         String result = "";
         ObjectMapper mapper = new ObjectMapper();
-        BusinessRuleType brType = brTypeService.getRuleType(id);
+        BusinessRuleType brtype = brTypeService.getRuleType(id);
         try {
-            result = mapper.writeValueAsString(brType);
+            if(brtype.id() != 0){
+            return ResponseEntity
+            .status(HttpStatus.OK)
+            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            }
+            return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body("{\"message\":\"Object not found\",\"object\":{}}");
 
         } catch (Exception e) {
             System.out.print(e);
+            return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
 
-        return result;
+        
     }
+    @RequestMapping(value = "/type/{id}", method = RequestMethod.DELETE)
+    public String deleteType(@PathVariable("id") int id) {
 
+        
+        ObjectMapper mapper = new ObjectMapper();
+        boolean result = brTypeService.deleteType(id);
+       
+        return result + "";
+    }
 }

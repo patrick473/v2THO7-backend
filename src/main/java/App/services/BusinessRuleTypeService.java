@@ -17,15 +17,21 @@ import App.persistence.BusinessruleTypeDAO;
 public class BusinessRuleTypeService {
     private BusinessruleTypeDAO brtypedao = new BusinessruleTypeDAO();
 
-    public boolean createNewType(BusinessRuleType brType) {
-
-        return this.brtypedao.createBusinessruleType(brType);
-
+    public BusinessRuleType createNewType(BusinessRuleType brType) {
+        int id = this.brtypedao.createBusinessruleType(brType); 
+        if(id != 0 ){
+            brType.setID(id);
+        };
+        return brType;
     }
 
-    public boolean updateType(BusinessRuleType brType) {
+    public BusinessRuleType updateType(BusinessRuleType brType) {
 
-        return this.brtypedao.updateBusinessRuleType(brType);
+        if (this.brtypedao.updateBusinessRuleType(brType)){
+            return brType;
+        };
+        brType.setID(0);
+        return brType;
 
     }
 
@@ -34,6 +40,10 @@ public class BusinessRuleTypeService {
     }
 
     public BusinessRuleType getRuleType(int id) {
-        return this.brtypedao.getType(id);
+        return this.brtypedao.getSingleType(id);
+    }
+    public boolean deleteType(int id){
+        return this.brtypedao.deleteType(id);
+        
     }
 }

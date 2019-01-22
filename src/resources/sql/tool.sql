@@ -52,6 +52,7 @@ create table BusinessRuleType (
     explanation varchar2(255),
     example varchar2(255),
     constraintPossible char(1) not null,
+    active INT DEFAULT 1 NULL
     constraint fk_businessruletype_category foreign key (category) references Category (id),
     constraint pk_businessrule_type primary key (id)
 );
@@ -106,6 +107,7 @@ create table BusinessRule (
     onUpdate char(1) not null,
     onDelete char(1) not null, 
     error varchar2(255) not null,
+    active INT DEFAULT 1 NULL,
     constraint fk_businessrule_businessruletype foreign key (businessRuleType) references BusinessRuleType (id),
     constraint fk_businessrule_operator foreign key (operator) references Operator (id),
     constraint fk_businessrule_targettable foreign key (targettable) references TargetTable (id),

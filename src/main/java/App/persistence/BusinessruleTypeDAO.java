@@ -28,7 +28,7 @@ public class BusinessruleTypeDAO {
         this.cdao = new CategoryDAO();
     }
 
-    public boolean createBusinessruleType(BusinessRuleType brtype) {
+    public int createBusinessruleType(BusinessRuleType brtype) {
         try {
             Connection con = this.jdbcInstance.getConnection();
             System.out.print('3');
@@ -47,20 +47,20 @@ public class BusinessruleTypeDAO {
             }
             int amount = pstmt.executeUpdate();
 
-            int id = this.findID(brtype.name());
-
+            int id = this.findID(con);
+            brtype.setID(id);
             System.out.print(id);
             for (Operator op : brtype.possibleoperators()) {
-                this.odao.createOperator(id, op);
+                this.odao.createOperator(id, op,con);
             }
             for (Map.Entry<String, String> parameter : brtype.parameters().entrySet()) {
-                this.pdao.createParameter(id, parameter.getKey(), parameter.getValue());
+                this.pdao.createParameter(id, parameter.getKey(), parameter.getValue(),con);
             }
             con.close();
-            return amount > 0;
+            return id ;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
@@ -84,13 +84,14 @@ public class BusinessruleTypeDAO {
             pstmt.setInt(7, brtype.id());
             int amount = pstmt.executeUpdate();
 
-            this.odao.deleteOperatorsByBusinessruleType(brtype.id());
+            this.odao.deleteOperatorsByBusinessruleType(brtype.id(),con);
+            this.pdao.deleteParametersByBusinessruleType(brtype.id(),con);
             for (Operator op : brtype.possibleoperators()) {
 
-                this.odao.createOperator(brtype.id(), op);
+                this.odao.createOperator(brtype.id(), op,con);
             }
             for (Map.Entry<String, String> parameter : brtype.parameters().entrySet()) {
-                this.pdao.createParameter(brtype.id(), parameter.getKey(), parameter.getValue());
+                this.pdao.createParameter(brtype.id(), parameter.getKey(), parameter.getValue(),con);
             }
             con.close();
             return amount > 0;
@@ -106,7 +107,7 @@ public class BusinessruleTypeDAO {
             Connection con = this.jdbcInstance.getConnection();
             ArrayList<Integer> typeids = this.findAllIDs();
             for (Integer id : typeids) {
-                brtypes.add(this.getType(id));
+                brtypes.add(this.getType(id,con));
             }
             con.close();
         } catch (Exception e) {
@@ -115,39 +116,63 @@ public class BusinessruleTypeDAO {
         return brtypes;
     }
 
-    public BusinessRuleType getType(int id) {
+    public BusinessRuleType getSingleType(int id){
+        BusinessRuleType brtype = new BusinessRuleType();
+        try{
+            Connection con = this.jdbcInstance.getConnection();
+            brtype  = this.getType(id, con);
+            con.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return brtype;
+    }
+    public BusinessRuleType getType(int id, Connection con) {
         BusinessRuleType brtype = new BusinessRuleType();
         try {
-            Connection con = this.jdbcInstance.getConnection();
+           
 
             PreparedStatement stmt = con.prepareStatement("select * from businessruletype where id=?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Category category = this.cdao.getCategory(rs.getInt(2));
-                Map<String, String> parameters = this.pdao.getParameters(id);
+                Category category = this.cdao.getCategory(rs.getInt(2),con);
+                Map<String, String> parameters = this.pdao.getParameters(id,con);
                 boolean constraintPossible = false;
                 if (rs.getInt(7) == 1) {
                     constraintPossible = true;
                 }
-                ArrayList<Operator> possibleOperators = this.odao.getOperators(id);
+                ArrayList<Operator> possibleOperators = this.odao.getOperators(id, con);
                 brtype = new BusinessRuleType(id, rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         constraintPossible, possibleOperators, parameters, category);
 
             }
-            con.close();
+           
         } catch (Exception e) {
-            e.printStackTrace();
+           
         }
         return brtype;
     }
-
-    private int findID(String name) {
+    public boolean deleteType(int id){
         try {
             Connection con = this.jdbcInstance.getConnection();
+            
+            PreparedStatement pstmt = con.prepareStatement("update  businessruletype set active=0 where id = ?");
+            pstmt.setInt(1, id);
+            int amount = pstmt.executeUpdate();
+            con.close();
+            return amount > 0;
+        } catch (Exception e) {
+           
+            return false;
+        }
+    }
 
-            PreparedStatement stmt = con.prepareStatement("select id from businessruletype where name=?");
-            stmt.setString(1, name);
+    private int findID(Connection con) {
+        try {
+            
+            PreparedStatement stmt = con.prepareStatement("select id from businessruletype where id=(select max(id) from businessruletype)");
 
             ResultSet rs = stmt.executeQuery();
             int id = 0;
@@ -156,10 +181,9 @@ public class BusinessruleTypeDAO {
                 id = rs.getInt("id");
             }
 
-            con.close();
             return id;
         } catch (Exception e) {
-            e.printStackTrace();
+           
             return 0;
         }
     }
@@ -178,7 +202,7 @@ public class BusinessruleTypeDAO {
             }
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+           
         }
         return ids;
     }

@@ -17,10 +17,10 @@ public class CategoryDAO {
     }
 
 
-    public Category getCategory(int id){
+    public Category getCategory(int id, Connection con){
         Category category = new Category();
         try {
-            Connection con = this.jdbcInstance.getConnection();
+           
             
             PreparedStatement pstmt = con.prepareStatement("select * from category where id=?");
             pstmt.setInt(1, id);
@@ -28,7 +28,7 @@ public class CategoryDAO {
             if(rs.next()){
                 category = new Category(rs.getInt(1),rs.getString(2));
             }
-            con.close();
+           
 
         } catch(Exception e){
             e.printStackTrace();

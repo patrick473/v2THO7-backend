@@ -17,10 +17,10 @@ public class ParameterDAO {
         this.jdbcInstance = JDBCSingleton.getInstance();
     }
 
-    public boolean createParameter(int brtypeid, String key, String value) {
+    public boolean createParameter(int brtypeid, String key, String value, Connection con) {
 
         try {
-            Connection con = this.jdbcInstance.getConnection();
+         
             String statement = "insert into parameter(businessruletype,key,value) values(?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(statement);
             pstmt.setInt(1, brtypeid);
@@ -28,7 +28,7 @@ public class ParameterDAO {
             pstmt.setString(3, value);
             int amount = pstmt.executeUpdate();
             ;
-            con.close();
+           
             return amount > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,10 +36,10 @@ public class ParameterDAO {
         }
     }
 
-    public Map<String, String> getParameters(int id) {
+    public Map<String, String> getParameters(int id, Connection con) {
         Map<String, String> parameters = new HashMap<String, String>();
         try {
-            Connection con = this.jdbcInstance.getConnection();
+            
             PreparedStatement pstmt = con.prepareStatement("select * from parameter where businessruletype = ?");
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -48,11 +48,23 @@ public class ParameterDAO {
 
                 parameters.put(rs.getString(3), rs.getString(4));
             }
-
-            con.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return parameters;
+    }
+    public int deleteParametersByBusinessruleType(int type, Connection con) {
+        int result = 0;
+        try {
+           
+            PreparedStatement pstmt = con
+                    .prepareStatement("delete from parameter where businessruletype=?");
+            pstmt.setInt(1, type);
+            result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
