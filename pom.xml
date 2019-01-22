@@ -68,15 +68,18 @@
     <version>2.9.4</version>
 </dependency>
 <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/resources/ojdbc7.jar</systemPath>
-        </dependency>
+    <groupId>tosad.hu</groupId>
+    <artifactId>tosadjdbcoracle</artifactId>
+    <version>1.0</version>
+</dependency>
 
   </dependencies>
   <repositories>
+   <repository>
+        <id>project.local</id>
+        <name>project</name>
+        <url>file:${project.basedir}/repo</url>
+    </repository>
   <repository>
     <id>maven.oracle.com</id>
     <releases>
