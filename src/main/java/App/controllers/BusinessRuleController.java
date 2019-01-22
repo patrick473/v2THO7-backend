@@ -22,12 +22,12 @@ public class BusinessRuleController{
     public ResponseEntity newRule(@RequestBody String jsonString){
         boolean result = false;
         try{
-        BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
-        result = brService.createNewRule(br);
+            BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
+            result = brService.createNewRule(br);
             if(result == true) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}")
             }
-            else if(result == false) {
+            else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
             }
         }

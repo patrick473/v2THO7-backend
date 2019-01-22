@@ -29,13 +29,13 @@ public class BusinessRuleTypeController {
         boolean result = false;
         try {
             BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
-
-
-            brtype = brTypeService.createNewType(brtype);
-            System.out.print(result + "result");
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            result = brTypeService.createNewType(brtype);
+            if(result == true) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}")
+            }
+            else if(result == false) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
+            }
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
@@ -58,9 +58,10 @@ public class BusinessRuleTypeController {
                 .status(HttpStatus.NOT_FOUND)
                 .body("{\"message\":\"Object not found\",\"object\":{}}");
             }
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            else {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            }
+
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
@@ -109,14 +110,15 @@ public class BusinessRuleTypeController {
         BusinessRuleType brtype = brTypeService.getRuleType(id);
         try {
             if(brtype.id() != 0){
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+                return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
             }
-            return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body("{\"message\":\"Object not found\",\"object\":{}}");
-
+            else {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("{\"message\":\"Object not found\",\"object\":{}}");
+            }
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity

@@ -46,4 +46,8 @@ public class BusinessRuleTypeService {
         return this.brtypedao.deleteType(id);
         
     }
+
+    public BusinessRuleType getSingleType(int id) {
+        return this.brtypedao.getSingleType(id);
+    }
 }
