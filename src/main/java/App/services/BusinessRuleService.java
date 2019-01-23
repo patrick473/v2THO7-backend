@@ -29,7 +29,7 @@ public class BusinessRuleService {
         return null;
 
     }
-    public BusinessRule getRule(int id){
+    public BusinessRule getSingleRule(int id){
         
         Map<String, String> bindings = new HashMap<String,String>();
         bindings.put("inRange", "true");
@@ -44,7 +44,7 @@ public class BusinessRuleService {
         BusinessRuleTypeService typeservice = new BusinessRuleTypeService();
         BusinessRuleType type  = typeservice.getSingleType(br.type());
 
-        if(validateConstraintInput(type.constraintpossible(), br.constraint()) && validateOperatorInput(type.possibleoperators(), br.operator())) {
+        if(validateConstraintInput(type.constraintpossible(), br.constraint()) && validateOperatorInput(type.possibleoperators(), br.operator()) && validateBindingInput(type.parameters(), br.bindings())) {
             return true;
         }
         else {

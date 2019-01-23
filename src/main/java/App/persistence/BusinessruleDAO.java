@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import App.model.businessrulebs.BusinessRule;
+import App.model.templatebs.Operator;
 
 
 /**
@@ -82,6 +84,52 @@ public class BusinessruleDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public BusinessRule getSingleRule(int id) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
+            PreparedStatement stmt = con.prepareStatement("select * from businessrule where id = ?");
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+
+                //Get the bindings of the businessrule
+                PreparedStatement getBindings = con.prepareStatement("select * from bindings where businessrule = ?");
+                getBindings.setInt(1, rs.getInt("id"));
+                ResultSet bd = getBindings.executeQuery();
+
+                HashMap<String, String> bindings = new HashMap<>();
+
+                while(bd.next()) {
+                    bindings.put(bd.getString("key"), bd.getString("value"));
+                }
+
+
+                BusinessRule br = new BusinessRule(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getBoolean("applied"),
+                        rs.getInt("operator"),
+                        bindings,
+                        rs.getInt("businessruletype"),
+                        rs.getBoolean("constraint"),
+                        rs.getInt("table"),
+                        rs.getBoolean("insert"),
+                        rs.getBoolean("update"),
+                        rs.getBoolean("delete"),
+                        rs.getString("error")
+                );
+
+                return br;
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

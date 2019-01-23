@@ -41,8 +41,7 @@ public class BusinessRuleController{
     }
     @RequestMapping(value ="/rule/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getRule(@PathVariable("id") int id) {
-        ObjectMapper mapper = new ObjectMapper();
-        BusinessRule brType = brService.getRule(id);
+        BusinessRule brType = brService.getSingleRule(id);
         try {
             if(brType != null) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");

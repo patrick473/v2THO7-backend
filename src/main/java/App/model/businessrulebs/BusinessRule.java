@@ -44,7 +44,8 @@ public class BusinessRule {
         this._update = update;
         this._delete = delete;
         this._error = error;
-    } 
+    }
+
     public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
     int type,boolean constraint,int table, boolean insert, boolean update, boolean delete, String error) {
         this._id = id;
