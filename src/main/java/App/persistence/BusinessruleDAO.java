@@ -126,6 +126,9 @@ public class BusinessruleDAO {
 
                 return br;
             }
+            else {
+                return null;
+            }
 
         } catch(Exception e) {
             e.printStackTrace();

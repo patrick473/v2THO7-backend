@@ -30,13 +30,11 @@ public class BusinessRuleService {
 
     }
     public BusinessRule getSingleRule(int id){
-        
-        Map<String, String> bindings = new HashMap<String,String>();
-        bindings.put("inRange", "true");
-        bindings.put("lowerRange", "1");
-        bindings.put("upperRange","10");
-        BusinessRule arng = new BusinessRule(1, "br1", true,1, bindings, 22, false,1,true,true,true,"error");
-        return arng;
+
+        BusinessruleDAO brdao = new BusinessruleDAO();
+        BusinessRule br = brdao.getSingleRule(id);
+
+        return br;
     }
 
     public boolean validateBusinessRuleInput(BusinessRule br) {
