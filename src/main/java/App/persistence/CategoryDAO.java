@@ -35,21 +35,5 @@ public class CategoryDAO {
         }
         return category;
     }
-    public boolean createCategory(String name) {
-
-        try {
-            Connection con = this.jdbcInstance.getConnection();
-            String statement = "insert into category(category) values(?)";
-            PreparedStatement pstmt = con.prepareStatement(statement);
-            
-            pstmt.setString(1, name);
-            int amount = pstmt.executeUpdate();
-           ;
-            con.close();
-            return amount > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+  
 }
