@@ -39,6 +39,7 @@ public class BusinessRuleController{
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
     }
+
     @RequestMapping(value ="/rule/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getRule(@PathVariable("id") int id) {
         BusinessRule brType = brService.getSingleRule(id);
@@ -50,6 +51,45 @@ public class BusinessRuleController{
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
             }
         
+        }
+        catch(Exception e){
+            System.out.print(e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/rule", method = RequestMethod.PUT, produces = "application/text", consumes = "application/json")
+    public ResponseEntity updateRule(@RequestBody String jsonString){
+        try{
+            BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
+            BusinessRule result = brService.updateRule(br);
+            if(result != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/rule/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    public ResponseEntity deleteRule(@PathVariable("id") int id) {
+        try {
+            if(brService.deleteRule(id)) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
+            }
+
         }
         catch(Exception e){
             System.out.print(e);

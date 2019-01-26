@@ -37,6 +37,23 @@ public class BusinessRuleService {
         return br;
     }
 
+    public BusinessRule updateRule(BusinessRule br) {
+        BusinessruleDAO brdao = new BusinessruleDAO();
+        if(validateBusinessRuleInput(br)) {
+            return brdao.updateBusinessRule(br);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public Boolean deleteRule(int id) {
+
+        BusinessruleDAO brdao = new BusinessruleDAO();
+        return brdao.deleteBusinessRule(id);
+
+    }
+
     public boolean validateBusinessRuleInput(BusinessRule br) {
 
         BusinessRuleTypeService typeservice = new BusinessRuleTypeService();

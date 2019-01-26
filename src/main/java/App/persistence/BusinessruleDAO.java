@@ -159,6 +159,37 @@ public class BusinessruleDAO {
         }
     }
 
+    public BusinessRule updateBusinessRule(BusinessRule br) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
 
+            PreparedStatement stmt = con.prepareStatement("select id from businessrule where name=?");
+            stmt.setString(1, name);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteBusinessRule(int id) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
+
+            PreparedStatement stmt = con.prepareStatement("delete from businessrule where id = ?");
+            stmt.setInt(1, id);
+
+            if(stmt.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
