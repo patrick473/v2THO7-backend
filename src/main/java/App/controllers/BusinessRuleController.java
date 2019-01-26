@@ -84,7 +84,7 @@ public class BusinessRuleController{
     public ResponseEntity deleteRule(@PathVariable("id") int id) {
         try {
             if(brService.deleteRule(id)) {
-                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":{}}");
             }
             else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
