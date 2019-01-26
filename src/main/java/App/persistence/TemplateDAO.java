@@ -31,10 +31,30 @@ public class TemplateDAO {
                 pstmt.setString(4, "0");
             }
             int amount = pstmt.executeUpdate();
-           ;
             con.close();
             return amount > 0;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteTemplate(int id) {
+        try {
+
+            Connection con = this.jdbcInstance.getConnection();
+            String statement = "delete from template where id = ?";
+            PreparedStatement pstmt = con.prepareStatement(statement);
+            pstmt.setInt(1, id);
+
+            if(pstmt.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(Exception e) {
             e.printStackTrace();
             return false;
         }
