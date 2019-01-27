@@ -103,36 +103,37 @@ public class BusinessruleTypeDAO {
 
     public ArrayList<BusinessRuleType> getAllTypes() {
         ArrayList<BusinessRuleType> brtypes = new ArrayList<BusinessRuleType>();
+       
         try {
             Connection con = this.jdbcInstance.getConnection();
-            ArrayList<Integer> typeids = this.findAllIDs();
-            for (Integer id : typeids) {
-                brtypes.add(this.getType(id,con));
+            Statement stmt = con.createStatement();
+
+            ResultSet rs = stmt.executeQuery("select * from businessruletype where active = 1");
+
+            while (rs.next()) {
+
+                Category category = this.cdao.getCategory(rs.getInt(2),con);
+                Map<String, String> parameters = this.pdao.getParameters(rs.getInt(2),con);
+                boolean constraintPossible = false;
+                if (rs.getInt(7) == 1) {
+                    constraintPossible = true;
+                }
+                ArrayList<Operator> possibleOperators = this.odao.getOperators(rs.getInt(2), con);
+                brtypes.add( new BusinessRuleType(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
+                constraintPossible, possibleOperators, parameters, category));
             }
             con.close();
-        } catch (Exception e) {
+        } catch(Exception e){
             e.printStackTrace();
         }
+        
         return brtypes;
     }
 
     public BusinessRuleType getSingleType(int id){
         BusinessRuleType brtype = new BusinessRuleType();
-        try{
-            Connection con = this.jdbcInstance.getConnection();
-            brtype  = this.getType(id, con);
-            con.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        return brtype;
-    }
-    public BusinessRuleType getType(int id, Connection con) {
-        BusinessRuleType brtype = new BusinessRuleType();
         try {
-           
-
+            Connection con = this.jdbcInstance.getConnection();
             PreparedStatement stmt = con.prepareStatement("select * from businessruletype where id=?");
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -146,14 +147,16 @@ public class BusinessruleTypeDAO {
                 ArrayList<Operator> possibleOperators = this.odao.getOperators(id, con);
                 brtype = new BusinessRuleType(id, rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
                         constraintPossible, possibleOperators, parameters, category);
-
+                con.close();
             }
            
         } catch (Exception e) {
-           
+           e.printStackTrace();
         }
+        
         return brtype;
     }
+    
     public boolean deleteType(int id){
         try {
             Connection con = this.jdbcInstance.getConnection();
