@@ -37,6 +37,13 @@ public class BusinessRuleService {
         return br;
     }
 
+    public ArrayList<BusinessRule> getAllRules() {
+        BusinessruleDAO brdao = new BusinessruleDAO();
+        ArrayList<BusinessRule> rules = brdao.getAllRules();
+
+        return rules;
+    }
+
     public BusinessRule updateRule(BusinessRule br) {
         BusinessruleDAO brdao = new BusinessruleDAO();
         if(validateBusinessRuleInput(br)) {

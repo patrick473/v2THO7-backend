@@ -11,6 +11,8 @@ import java.util.Map;
 import App.model.businessrulebs.BusinessRule;
 import App.model.templatebs.Operator;
 
+import javax.script.Bindings;
+
 
 /**
  * BusinessruleTypeDAO
@@ -136,6 +138,43 @@ public class BusinessruleDAO {
         }
     }
 
+    public ArrayList<BusinessRule> getAllRules() {
+        ArrayList<BusinessRule> rules = new ArrayList<>();
+        HashMap<String, String> emptyList = new HashMap<>();
+        try{
+            Connection con = this.jdbcInstance.getConnection();
+            PreparedStatement stmt = con.prepareStatement("select * from businessrule");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                BusinessRule br = new BusinessRule(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getBoolean("applied"),
+                        rs.getInt("operator"),
+                        emptyList,
+                        rs.getInt("businessruletype"),
+                        rs.getBoolean("constraint"),
+                        rs.getInt("targettable"),
+                        rs.getBoolean("oninsert"),
+                        rs.getBoolean("onupdate"),
+                        rs.getBoolean("ondelete"),
+                        rs.getString("error")
+                );
+
+                rules.add(br);
+            }
+
+            return rules;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
  
     private int findID(String name) {
         try {

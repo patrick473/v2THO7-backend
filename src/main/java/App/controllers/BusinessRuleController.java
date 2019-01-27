@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import App.model.businessrulebs.BusinessRule;
 import App.services.BusinessRuleService;
 
+import java.util.ArrayList;
 
 
 @RestController
@@ -31,6 +32,29 @@ public class BusinessRuleController{
             else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
             }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/rule/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getAllRules() {
+        ArrayList<String> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            ArrayList<BusinessRule> rules = brService.getAllRules();
+            if(rules.size() > 0) {
+                for (BusinessRule rule : rules) {
+                    result.add(mapper.writeValueAsString(rule));
+                }
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+result+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"No rules found!\",\"object\":{}}");
+            }
+
         }
         catch(Exception e){
             e.printStackTrace();
