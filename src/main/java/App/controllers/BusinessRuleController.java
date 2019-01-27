@@ -33,19 +33,17 @@ public class BusinessRuleController{
             }
         }
         catch(Exception e){
-            System.out.print(e);
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
     @RequestMapping(value ="/rule/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getRule(@PathVariable("id") int id) {
-        BusinessRule brType = brService.getSingleRule(id);
+        BusinessRule br = brService.getSingleRule(id);
         try {
-            if(brType != null) {
-                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brType)+"}");
+            if(br != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
             }
             else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
@@ -53,10 +51,8 @@ public class BusinessRuleController{
         
         }
         catch(Exception e){
-            System.out.print(e);
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
@@ -73,10 +69,8 @@ public class BusinessRuleController{
             }
         }
         catch(Exception e){
-            System.out.print(e);
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
@@ -92,10 +86,8 @@ public class BusinessRuleController{
 
         }
         catch(Exception e){
-            System.out.print(e);
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 

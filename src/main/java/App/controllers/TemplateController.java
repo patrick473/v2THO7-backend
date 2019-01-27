@@ -21,10 +21,14 @@ public class TemplateController{
 
     @RequestMapping(value ="/template", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
     public ResponseEntity createTemplate(@RequestBody String jsonString){
-        boolean result = false;
         try{
-        Template template = new ObjectMapper().readValue(jsonString, Template.class);
-        result = tService.createNewTemplate(template);
+            Template template = new ObjectMapper().readValue(jsonString, Template.class);
+            if(tService.createNewTemplate(template) != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(template)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+            }
         }
         catch(Exception e){
             System.out.print(e);
@@ -36,13 +40,14 @@ public class TemplateController{
 
     @RequestMapping(value ="/template/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getTemplate(@PathVariable("id") int id) {
-
-        String result = "";
-        ObjectMapper mapper = new ObjectMapper();
-        Template brType = tService.getTemplate(id);
-        try {
-        result = mapper.writeValueAsString(brType);
-        
+        try{
+            Template template = tService.getTemplate(id);
+            if(template != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(template)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+            }
         }
         catch(Exception e){
             System.out.print(e);

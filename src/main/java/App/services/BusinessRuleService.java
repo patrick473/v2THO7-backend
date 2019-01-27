@@ -1,6 +1,7 @@
 package App.services;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ public class BusinessRuleService {
                 return br;
             }
         }
-
         return null;
 
     }
@@ -58,8 +58,7 @@ public class BusinessRuleService {
 
         BusinessRuleTypeService typeservice = new BusinessRuleTypeService();
         BusinessRuleType type  = typeservice.getSingleType(br.type());
-
-        if(validateConstraintInput(type.constraintpossible(), br.constraint()) && validateOperatorInput(type.possibleoperators(), br.operator()) && validateBindingInput(type.parameters(), br.bindings())) {
+        if(type != null && validateConstraintInput(type.constraintpossible(), br.constraint()) && validateOperatorInput(type.possibleoperators(), br.operator()) && validateBindingInput(type.parameters(), br.bindings())) {
             return true;
         }
         else {
@@ -94,7 +93,10 @@ public class BusinessRuleService {
 
     //Check if Rule is allowed to be a constraint
     public boolean validateConstraintInput(boolean isContraintAllowed, boolean isConstraintInput) {
-        if(isContraintAllowed == isConstraintInput) {
+        if(isContraintAllowed) {
+            return true;
+        }
+        else if(!isContraintAllowed && isContraintAllowed == isConstraintInput) {
             return true;
         }
         else {

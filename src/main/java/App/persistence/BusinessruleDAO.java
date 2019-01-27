@@ -98,7 +98,7 @@ public class BusinessruleDAO {
             if(rs.next()) {
 
                 //Get the bindings of the businessrule
-                PreparedStatement getBindings = con.prepareStatement("select * from bindings where businessrule = ?");
+                PreparedStatement getBindings = con.prepareStatement("select * from binding where businessrule = ?");
                 getBindings.setInt(1, rs.getInt("id"));
                 ResultSet bd = getBindings.executeQuery();
 
@@ -117,10 +117,10 @@ public class BusinessruleDAO {
                         bindings,
                         rs.getInt("businessruletype"),
                         rs.getBoolean("constraint"),
-                        rs.getInt("table"),
-                        rs.getBoolean("insert"),
-                        rs.getBoolean("update"),
-                        rs.getBoolean("delete"),
+                        rs.getInt("targettable"),
+                        rs.getBoolean("oninsert"),
+                        rs.getBoolean("onupdate"),
+                        rs.getBoolean("ondelete"),
                         rs.getString("error")
                 );
 
@@ -164,7 +164,9 @@ public class BusinessruleDAO {
             Connection con = this.jdbcInstance.getConnection();
 
             PreparedStatement stmt = con.prepareStatement("select id from businessrule where name=?");
-            stmt.setString(1, name);
+            stmt.setString(1, br.name());
+
+            return null;
         }
         catch(Exception e) {
             e.printStackTrace();

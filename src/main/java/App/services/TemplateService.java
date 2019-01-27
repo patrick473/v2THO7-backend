@@ -8,11 +8,14 @@ import App.persistence.TemplateDAO;
  */
 public class TemplateService {
 
-    public boolean createNewTemplate(Template template){
+    public Template createNewTemplate(Template template){
         TemplateDAO tdao = new TemplateDAO();
-        boolean success = tdao.createTemplate(template);
-        return success;
-       
+        if(tdao.createTemplate(template)) {
+            return template;
+        }
+        else {
+            return null;
+        }
     }
     public Template getTemplate(int id){
 
