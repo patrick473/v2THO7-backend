@@ -15,7 +15,7 @@ public class Database {
     private DatabaseType _dialect;
     private ArrayList<Table> _tables;
 
-    Database(String name, String username, String password, String host, String schema, String port,
+    public Database(String name, String username, String password, String host, String schema, String port,
             DatabaseType dialect, ArrayList<Table> tables) {
         this._name = name;
         this._username = username;

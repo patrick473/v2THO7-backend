@@ -8,7 +8,7 @@ public class DatabaseType {
     private String _jdbcTypeCode;
     private String _triggerTemplate;
 
-    DatabaseType(String jdbcTypeCode, String triggerTemplate) {
+    public DatabaseType(String jdbcTypeCode, String triggerTemplate) {
         this._jdbcTypeCode = jdbcTypeCode;
         this._triggerTemplate = triggerTemplate;
     }
