@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import App.model.templatebs.Template;
 import App.services.TemplateService;
 
+import java.util.ArrayList;
+
 
 @RestController
 public class TemplateController{
@@ -46,7 +48,55 @@ public class TemplateController{
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(template)+"}");
             }
             else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/template/{ruletypeid}/{databasetypeid}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getTemplateByRuleTypeAndDatabaseType(@PathVariable("ruletypeid") int ruletypeid, @PathVariable("databasetypeid") int databasetypeid) {
+        ArrayList<String> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+            ArrayList<Template> templates = tService.getTemplateByRuleTypeAndDatabaseType(ruletypeid, databasetypeid);
+            if(templates.size() > 0) {
+                for (Template template : templates) {
+                    result.add(mapper.writeValueAsString(template));
+                }
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+result+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/template/all", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity getAllTemplates() {
+        ArrayList<String> result = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        try{
+            ArrayList<Template> templates = tService.getAllTemplates();
+            if(templates.size() > 0) {
+                for (Template template : templates) {
+                    result.add(mapper.writeValueAsString(template));
+                }
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+result+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
             }
         }
         catch(Exception e){

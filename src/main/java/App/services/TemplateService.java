@@ -3,6 +3,8 @@ package App.services;
 import App.model.templatebs.Template;
 import App.persistence.TemplateDAO;
 
+import java.util.ArrayList;
+
 /**
  * TemplateService
  */
@@ -17,10 +19,20 @@ public class TemplateService {
             return null;
         }
     }
-    public Template getTemplate(int id){
 
-        Template template = new Template(1, 1, 1, "TEMPLATE",false);
-        return template;
+    public ArrayList<Template> getTemplateByRuleTypeAndDatabaseType(int ruletypeid, int databasetypeid) {
+        TemplateDAO tdao = new TemplateDAO();
+        return tdao.getTemplateByRuleTypeAndDatabaseType(ruletypeid, databasetypeid);
+    }
+
+    public ArrayList<Template> getAllTemplates() {
+        TemplateDAO tdao = new TemplateDAO();
+        return tdao.getAllTemplates();
+    }
+
+    public Template getTemplate(int id){
+        TemplateDAO tdao = new TemplateDAO();
+        return tdao.getTemplate(id);
     }
 
     public boolean deleteTemplate(int id) {

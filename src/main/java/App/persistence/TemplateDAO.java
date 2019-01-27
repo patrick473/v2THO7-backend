@@ -2,6 +2,8 @@ package App.persistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import App.model.templatebs.Template;
 
@@ -41,6 +43,94 @@ public class TemplateDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public ArrayList<Template> getTemplateByRuleTypeAndDatabaseType(int ruletypeid, int databasetypeid) {
+        ArrayList<Template> templates = new ArrayList<>();
+        try {
+
+            Connection con = this.jdbcInstance.getConnection();
+            String stmt = "select * from template where ruletype = ? and databasetype = ?";
+            PreparedStatement pstmt = con.prepareStatement(stmt);
+            pstmt.setInt(1, ruletypeid);
+            pstmt.setInt(2, databasetypeid);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                Template template = new Template(
+                        rs.getInt("id"),
+                        rs.getInt("databasetype"),
+                        rs.getInt("ruletype"),
+                        rs.getString("template"),
+                        rs.getBoolean("isconstraint"));
+
+                templates.add(template);
+            }
+
+            return templates;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return templates;
+        }
+    }
+
+    public ArrayList<Template> getAllTemplates() {
+        ArrayList<Template> templates = new ArrayList<>();
+        try {
+
+            Connection con = this.jdbcInstance.getConnection();
+            String stmt = "select * from template";
+            PreparedStatement pstmt = con.prepareStatement(stmt);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                Template template = new Template(
+                        rs.getInt("id"),
+                        rs.getInt("databasetype"),
+                        rs.getInt("ruletype"),
+                        rs.getString("template"),
+                        rs.getBoolean("isconstraint"));
+
+                templates.add(template);
+            }
+
+            return templates;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return templates;
+        }
+    }
+
+    public Template getTemplate(int id) {
+        try {
+
+            Connection con = this.jdbcInstance.getConnection();
+            String stmt = "select * from template where id = ?";
+            PreparedStatement pstmt = con.prepareStatement(stmt);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()) {
+                Template template = new Template(
+                        rs.getInt("id"),
+                        rs.getInt("databasetype"),
+                        rs.getInt("ruletype"),
+                        rs.getString("template"),
+                        rs.getBoolean("isconstraint"));
+
+                return template;
+            }else {
+                return null;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
