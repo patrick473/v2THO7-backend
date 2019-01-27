@@ -28,7 +28,7 @@ public class BusinessruleTypeDAO {
         this.cdao = new CategoryDAO();
     }
 
-    public int createBusinessruleType(BusinessRuleType brtype) {
+    public boolean createBusinessruleType(BusinessRuleType brtype) {
         try {
             Connection con = this.jdbcInstance.getConnection();
             System.out.print('3');
@@ -57,10 +57,10 @@ public class BusinessruleTypeDAO {
                 this.pdao.createParameter(id, parameter.getKey(), parameter.getValue(),con);
             }
             con.close();
-            return id ;
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
+            return false;
         }
     }
 

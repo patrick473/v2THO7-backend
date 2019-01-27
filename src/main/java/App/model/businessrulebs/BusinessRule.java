@@ -1,5 +1,6 @@
 package App.model.businessrulebs;
 
+import java.lang.reflect.Array;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -44,7 +45,8 @@ public class BusinessRule {
         this._update = update;
         this._delete = delete;
         this._error = error;
-    } 
+    }
+
     public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
     int type,boolean constraint,int table, boolean insert, boolean update, boolean delete, String error) {
         this._id = id;
@@ -59,7 +61,7 @@ public class BusinessRule {
         this._update = update;
         this._delete = delete;
         this._error = error;
-}
+    }
 
 
     public int id() {

@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import App.model.businessrulebs.BusinessRule;
+import App.model.templatebs.Operator;
+
+import javax.script.Bindings;
 
 
 /**
@@ -65,23 +69,112 @@ public class BusinessruleDAO {
             }
             pstmt.setString(10, br.error());
 
-            int amount = pstmt.executeUpdate();
-
             int id = this.findID(br.name());
 
             for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
                 this.bdao.createBinding(id, binding.getKey(), binding.getValue());
             }
-            System.out.print(id);
 
-            con.close();
-            return amount > 0;
+            if(pstmt.executeUpdate() == 1) {
+                con.close();
+                return true;
+            }
+            else{
+                con.close();
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
+    public BusinessRule getSingleRule(int id) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
+            PreparedStatement stmt = con.prepareStatement("select * from businessrule where id = ?");
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+
+                //Get the bindings of the businessrule
+                PreparedStatement getBindings = con.prepareStatement("select * from binding where businessrule = ?");
+                getBindings.setInt(1, rs.getInt("id"));
+                ResultSet bd = getBindings.executeQuery();
+
+                HashMap<String, String> bindings = new HashMap<>();
+
+                while(bd.next()) {
+                    bindings.put(bd.getString("key"), bd.getString("value"));
+                }
+
+
+                BusinessRule br = new BusinessRule(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getBoolean("applied"),
+                        rs.getInt("operator"),
+                        bindings,
+                        rs.getInt("businessruletype"),
+                        rs.getBoolean("constraint"),
+                        rs.getInt("targettable"),
+                        rs.getBoolean("oninsert"),
+                        rs.getBoolean("onupdate"),
+                        rs.getBoolean("ondelete"),
+                        rs.getString("error")
+                );
+
+                return br;
+            }
+            else {
+                return null;
+            }
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<BusinessRule> getAllRules() {
+        ArrayList<BusinessRule> rules = new ArrayList<>();
+        HashMap<String, String> emptyList = new HashMap<>();
+        try{
+            Connection con = this.jdbcInstance.getConnection();
+            PreparedStatement stmt = con.prepareStatement("select * from businessrule");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                BusinessRule br = new BusinessRule(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getBoolean("applied"),
+                        rs.getInt("operator"),
+                        emptyList,
+                        rs.getInt("businessruletype"),
+                        rs.getBoolean("constraint"),
+                        rs.getInt("targettable"),
+                        rs.getBoolean("oninsert"),
+                        rs.getBoolean("onupdate"),
+                        rs.getBoolean("ondelete"),
+                        rs.getString("error")
+                );
+
+                rules.add(br);
+            }
+
+            return rules;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
  
     private int findID(String name) {
         try {
@@ -105,6 +198,39 @@ public class BusinessruleDAO {
         }
     }
 
+    public BusinessRule updateBusinessRule(BusinessRule br) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
 
+            PreparedStatement stmt = con.prepareStatement("select id from businessrule where name=?");
+            stmt.setString(1, br.name());
+
+            return null;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean deleteBusinessRule(int id) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
+
+            PreparedStatement stmt = con.prepareStatement("delete from businessrule where id = ?");
+            stmt.setInt(1, id);
+
+            if(stmt.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

@@ -18,11 +18,12 @@ public class BusinessRuleTypeService {
     private BusinessruleTypeDAO brtypedao = new BusinessruleTypeDAO();
 
     public BusinessRuleType createNewType(BusinessRuleType brType) {
-        int id = this.brtypedao.createBusinessruleType(brType); 
-        if(id != 0 ){
-            brType.setID(id);
-        };
-        return brType;
+        if(this.brtypedao.createBusinessruleType(brType)) {
+            return brType;
+        }
+        else {
+            return null;
+        }
     }
 
     public BusinessRuleType updateType(BusinessRuleType brType) {
@@ -45,5 +46,9 @@ public class BusinessRuleTypeService {
     public boolean deleteType(int id){
         return this.brtypedao.deleteType(id);
         
+    }
+
+    public BusinessRuleType getSingleType(int id) {
+        return this.brtypedao.getSingleType(id);
     }
 }

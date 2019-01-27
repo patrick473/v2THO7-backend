@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import App.model.businessrulebs.BusinessRule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
@@ -22,24 +23,23 @@ import App.services.BusinessRuleTypeService;
 
 @RestController
 public class BusinessRuleTypeController {
-    BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
+    private BusinessRuleTypeService brTypeService = new BusinessRuleTypeService();
 
     @RequestMapping(value = "/type", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public ResponseEntity newType(@RequestBody String jsonString) {
-        boolean result = false;
         try {
             BusinessRuleType brtype = new ObjectMapper().readValue(jsonString, BusinessRuleType.class);
-
-
-            brtype = brTypeService.createNewType(brtype);
-            System.out.print(result + "result");
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            BusinessRuleType result = brTypeService.createNewType(brtype);
+            if(result != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+            }
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
       
@@ -58,13 +58,14 @@ public class BusinessRuleTypeController {
                 .status(HttpStatus.NOT_FOUND)
                 .body("{\"message\":\"Object not found\",\"object\":{}}");
             }
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            else {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+            }
+
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
         
@@ -95,7 +96,7 @@ public class BusinessRuleTypeController {
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
         
@@ -109,18 +110,19 @@ public class BusinessRuleTypeController {
         BusinessRuleType brtype = brTypeService.getRuleType(id);
         try {
             if(brtype.id() != 0){
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
+                return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(brtype)+"}");
             }
-            return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body("{\"message\":\"Object not found\",\"object\":{}}");
-
+            else {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("{\"message\":\"Object not found\",\"object\":{}}");
+            }
         } catch (Exception e) {
             System.out.print(e);
             return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
         }
 
