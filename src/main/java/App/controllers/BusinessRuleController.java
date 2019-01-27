@@ -38,7 +38,7 @@ public class BusinessRuleController{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
-
+    //test
     @RequestMapping(value ="/rule/all", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getAllRules() {
         ArrayList<String> result = new ArrayList<>();
