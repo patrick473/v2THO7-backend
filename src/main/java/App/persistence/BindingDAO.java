@@ -31,4 +31,24 @@ public class BindingDAO {
             return false;
         }
     }
+
+    public boolean deleteBindingByRule(int id) {
+        try {
+            Connection con = this.jdbcInstance.getConnection();
+            String statement = "delete from binding where businessrule = ?";
+            PreparedStatement pstmt = con.prepareStatement(statement);
+            pstmt.setInt(1, id);
+
+            if(pstmt.executeUpdate() == 1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

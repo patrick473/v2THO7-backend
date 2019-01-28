@@ -67,6 +67,6 @@ public class DatabaseDAO {
             e.printStackTrace();
             return null;
         }
+        return null;
     }
-
 }

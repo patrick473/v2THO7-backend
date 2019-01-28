@@ -14,7 +14,8 @@ public class DatabaseService {
     }
 
     public DatabaseType getDatabaseType(int id) {
-        return dbdao.getDatabaseType();
+        //return dbdao.getDatabaseType();
+        return null;
     }
 
 }

@@ -200,12 +200,34 @@ public class BusinessruleDAO {
 
     public BusinessRule updateBusinessRule(BusinessRule br) {
         try {
+            BindingDAO binddao = new BindingDAO();
             Connection con = this.jdbcInstance.getConnection();
 
-            PreparedStatement stmt = con.prepareStatement("select id from businessrule where name=?");
+            PreparedStatement stmt = con.prepareStatement("update businessrule set name = ?, targettable = ?, businessruletype = ?, operator = ?, applied = ?, constraint = ?, oninsert = ?, onupdate = ?, ondelete = ?, error = ? where id = ?");
             stmt.setString(1, br.name());
+            stmt.setInt(2, br.table());
+            stmt.setInt(3, br.type());
+            stmt.setInt(4, br.operator());
+            stmt.setBoolean(5, br.applied());
+            stmt.setBoolean(6, br.constraint());
+            stmt.setBoolean(7, br.insert());
+            stmt.setBoolean(8, br.update());
+            stmt.setBoolean(9, br.delete());
+            stmt.setString(10, br.error());
+            stmt.setInt(11, br.id());
 
-            return null;
+            if(stmt.executeUpdate() == 1) {
+                binddao.deleteBindingByRule(br.id());
+                for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
+                    binddao.createBinding(br.id(), binding.getKey(), binding.getValue());
+                }
+                con.close();
+                return br;
+            }
+            else {
+                con.close();
+                return null;
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -221,9 +243,11 @@ public class BusinessruleDAO {
             stmt.setInt(1, id);
 
             if(stmt.executeUpdate() == 1) {
+                con.close();
                 return true;
             }
             else {
+                con.close();
                 return false;
             }
         }
