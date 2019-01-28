@@ -154,4 +154,29 @@ public class TemplateDAO {
             return false;
         }
     }
+
+    public Template updateTemplate(Template template) {
+        try{
+
+            Connection con = this.jdbcInstance.getConnection();
+            String statement = "update template set databasetype = ?, ruletype = ?, template = ?, isconstraint = ? where id = ?";
+            PreparedStatement pstmt = con.prepareStatement(statement);
+            pstmt.setInt(1, template.sqldialect());
+            pstmt.setInt(2, template.businessruleType());
+            pstmt.setString(3, template.templatestring());
+            pstmt.setBoolean(4, template.isConstraint());
+            pstmt.setInt(5, template.id());
+
+            if(pstmt.executeUpdate() == 1) {
+                return template;
+            }
+            else {
+                return null;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

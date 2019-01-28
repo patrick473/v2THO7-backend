@@ -33,7 +33,26 @@ public class TemplateController{
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/template", method = RequestMethod.PUT, produces = "application/text", consumes = "application/json")
+    public ResponseEntity updateTemplate(@RequestBody String jsonString){
+        try{
+            Template template = new ObjectMapper().readValue(jsonString, Template.class);
+            if(tService.updateTemplate(template) != null) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(template)+"}");
+            }
+            else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
@@ -52,7 +71,7 @@ public class TemplateController{
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
@@ -76,7 +95,7 @@ public class TemplateController{
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
@@ -100,7 +119,7 @@ public class TemplateController{
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
@@ -120,7 +139,7 @@ public class TemplateController{
 
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
