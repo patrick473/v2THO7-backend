@@ -115,14 +115,14 @@ public class TemplateController{
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+result+"}");
             }
             else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":[]}");
             }
         }
         catch(Exception e){
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+                    .body("{\"message\":\""+e.toString()+"\",\"object\":[]}");
         }
     }
 

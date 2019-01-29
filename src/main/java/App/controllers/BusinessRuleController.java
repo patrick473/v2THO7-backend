@@ -52,13 +52,13 @@ public class BusinessRuleController{
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+result+"}");
             }
             else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"No rules found!\",\"object\":{}}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"No rules found!\",\"object\":[]}");
             }
 
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":[]}");
         }
     }
 

@@ -87,7 +87,7 @@ public class BusinessRuleTypeController {
             if(result.isEmpty()){
                 return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
-            .body("{\"message\":\"No objects found\",\"object\":{}}");
+            .body("{\"message\":\"No objects found\",\"object\":[]}");
             }
             return ResponseEntity
                 .status(HttpStatus.OK)
@@ -97,7 +97,7 @@ public class BusinessRuleTypeController {
             System.out.print(e);
             return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            .body("{\"message\":\""+e.toString()+"\",\"object\":[]}");
         }
         
     }
