@@ -42,7 +42,6 @@ public class OperatorDAO {
             pstmt.setInt(2, id);
             int amount = pstmt.executeUpdate();
             System.out.print(id);
-            
             return amount > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +66,7 @@ public class OperatorDAO {
                 operators.add(this.getOperator(opid));
             }
 
-           
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -68,7 +68,7 @@ public class TemplateDAO {
 
                 templates.add(template);
             }
-
+            con.close();
             return templates;
         }
         catch(Exception e) {
@@ -97,7 +97,7 @@ public class TemplateDAO {
 
                 templates.add(template);
             }
-
+            con.close();
             return templates;
         }
         catch(Exception e) {
@@ -123,8 +123,10 @@ public class TemplateDAO {
                         rs.getString("template"),
                         rs.getBoolean("isconstraint"));
 
+                con.close();
                 return template;
             }else {
+                con.close();
                 return null;
             }
         }
@@ -143,9 +145,11 @@ public class TemplateDAO {
             pstmt.setInt(1, id);
 
             if(pstmt.executeUpdate() == 1) {
+                con.close();
                 return true;
             }
             else {
+                con.close();
                 return false;
             }
         }
@@ -168,9 +172,11 @@ public class TemplateDAO {
             pstmt.setInt(5, template.id());
 
             if(pstmt.executeUpdate() == 1) {
+                con.close();
                 return template;
             }
             else {
+                con.close();
                 return null;
             }
         }

@@ -56,10 +56,11 @@ public class DatabaseDAO {
                             type,
                             tables
                             );
-
+                    con.close();
                     return database;
                 }
             }else {
+                con.close();
                 return null;
             }
         }

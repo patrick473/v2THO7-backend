@@ -40,9 +40,11 @@ public class BindingDAO {
             pstmt.setInt(1, id);
 
             if(pstmt.executeUpdate() == 1) {
+                con.close();
                 return true;
             }
             else {
+                con.close();
                 return false;
             }
         }
