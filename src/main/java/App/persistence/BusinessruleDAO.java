@@ -239,7 +239,8 @@ public class BusinessruleDAO {
     public boolean deleteBusinessRule(int id) {
         try {
             Connection con = this.jdbcInstance.getConnection();
-
+            BindingDAO binddao = new BindingDAO();
+            binddao.deleteBindingByRule(id,con);
             PreparedStatement stmt = con.prepareStatement("delete from businessrule where id = ?");
             stmt.setInt(1, id);
 
