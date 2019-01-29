@@ -37,10 +37,8 @@ public class BusinessRuleTypeController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
             }
         } catch (Exception e) {
-            System.out.print(e);
-            return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
       
     }
@@ -63,10 +61,8 @@ public class BusinessRuleTypeController {
             }
 
         } catch (Exception e) {
-            System.out.print(e);
-            return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
         
     }
@@ -94,10 +90,8 @@ public class BusinessRuleTypeController {
                 .body("{\"message\":\"success\",\"object\":"+result+"}");
               
         } catch (Exception e) {
-            System.out.print(e);
-            return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("{\"message\":\""+e.toString()+"\",\"object\":[]}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":[]}");
         }
         
     }
@@ -120,29 +114,29 @@ public class BusinessRuleTypeController {
                         .body("{\"message\":\"Object not found\",\"object\":{}}");
             }
         } catch (Exception e) {
-            System.out.print(e);
-            return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
 
         
     }
     @RequestMapping(value = "/type/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteType(@PathVariable("id") int id) {
-
-        
-        ObjectMapper mapper = new ObjectMapper();
-        boolean result = brTypeService.deleteType(id);
-       
-        if(result){
-            return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("{\"message\":\"Succes\",\"object\":{}}");
+        try {
+            if(brTypeService.deleteType(id)){
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body("{\"message\":\"Succes\",\"object\":{}}");
+            }
+            else {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("{\"message\":\"Object not found\",\"object\":{}}");
+            }
         }
-
-        return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body("{\"message\":\"Object not found\",\"object\":{}}");
+        catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+        }
     }
 }

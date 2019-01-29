@@ -34,9 +34,7 @@ public class TemplateController{
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
@@ -72,9 +70,7 @@ public class TemplateController{
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
@@ -96,9 +92,7 @@ public class TemplateController{
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
@@ -120,9 +114,7 @@ public class TemplateController{
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":[]}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":[]}");
         }
     }
 
@@ -140,9 +132,7 @@ public class TemplateController{
         }
         catch(Exception e){
             e.printStackTrace();
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\":\""+e.toString()+"\",\"object\":{}}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }
 
