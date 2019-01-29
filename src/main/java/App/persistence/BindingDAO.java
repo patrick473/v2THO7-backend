@@ -13,10 +13,10 @@ public class BindingDAO {
         this.jdbcInstance = JDBCSingleton.getInstance();
     }
 
-    public boolean createBinding(int brid,String key,String value) {
+    public boolean createBinding(int brid,String key,String value, Connection con) {
 
         try {
-            Connection con = this.jdbcInstance.getConnection();
+            
             String statement = "insert into binding(businessrule,key,value) values(?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(statement);
             pstmt.setInt(1,brid);
@@ -24,7 +24,7 @@ public class BindingDAO {
             pstmt.setString(3, value);
             int amount = pstmt.executeUpdate();
            ;
-            con.close();
+          
             return amount > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,19 +32,19 @@ public class BindingDAO {
         }
     }
 
-    public boolean deleteBindingByRule(int id) {
+    public boolean deleteBindingByRule(int id,Connection con) {
         try {
-            Connection con = this.jdbcInstance.getConnection();
+          
             String statement = "delete from binding where businessrule = ?";
             PreparedStatement pstmt = con.prepareStatement(statement);
             pstmt.setInt(1, id);
 
             if(pstmt.executeUpdate() == 1) {
-                con.close();
+               
                 return true;
             }
             else {
-                con.close();
+                
                 return false;
             }
         }

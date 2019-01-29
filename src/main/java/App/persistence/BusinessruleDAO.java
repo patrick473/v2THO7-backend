@@ -72,7 +72,7 @@ public class BusinessruleDAO {
             int id = this.findID(br.name());
 
             for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
-                this.bdao.createBinding(id, binding.getKey(), binding.getValue());
+                this.bdao.createBinding(id, binding.getKey(), binding.getValue(),con);
             }
 
             if(pstmt.executeUpdate() == 1) {
@@ -126,6 +126,7 @@ public class BusinessruleDAO {
                         rs.getString("error")
                 );
 
+                con.close();
                 return br;
             }
             else {
@@ -165,7 +166,7 @@ public class BusinessruleDAO {
 
                 rules.add(br);
             }
-
+            con.close();
             return rules;
         }
         catch(Exception e) {
@@ -217,9 +218,9 @@ public class BusinessruleDAO {
             stmt.setInt(11, br.id());
 
             if(stmt.executeUpdate() == 1) {
-                binddao.deleteBindingByRule(br.id());
+                binddao.deleteBindingByRule(br.id(),con);
                 for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
-                    binddao.createBinding(br.id(), binding.getKey(), binding.getValue());
+                    binddao.createBinding(br.id(), binding.getKey(), binding.getValue(),con);
                 }
                 con.close();
                 return br;
