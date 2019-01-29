@@ -25,6 +25,7 @@ public class TemplateSerializer extends StdSerializer<Template> {
     public void serialize(Template value, JsonGenerator jgen, SerializerProvider provider) throws IOException,JsonProcessingException {
 
         jgen.writeStartObject();
+        jgen.writeNumberField("id", value.id());
         jgen.writeNumberField("sqldialect", value.sqldialect());
         jgen.writeNumberField("businessruletype", value.businessruleType());
         jgen.writeStringField("template", value.templatestring());
