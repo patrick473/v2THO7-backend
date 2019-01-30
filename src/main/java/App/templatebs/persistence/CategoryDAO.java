@@ -28,7 +28,7 @@ public class CategoryDAO {
             if(rs.next()){
                 category = new Category(rs.getInt(1),rs.getString(2));
             }
-            con.close();
+   
            
 
         } catch(Exception e){

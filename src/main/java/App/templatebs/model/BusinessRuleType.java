@@ -55,6 +55,7 @@ public class BusinessRuleType {
         this._category = category;
     }
 
+    
 
     public int id() {
         return this._id;
@@ -81,15 +82,22 @@ public class BusinessRuleType {
     public boolean constraintpossible() {
         return this._constraintPossible;
     }
-
+    public void setPossibleoperators(ArrayList<Operator> operators) {
+        this._possibleOperators = operators;
+    }
     public ArrayList<Operator> possibleoperators() {
         return this._possibleOperators;
     }
-
+    public void setParameters( Map<String, String> parameters){
+        this._parameters = parameters;
+    }
     public Map<String, String> parameters() {
         return this._parameters;
     }
 
+    public void setCategory(Category category){
+        this._category = category;
+    }
     public Category category() {
         return this._category;
     }
