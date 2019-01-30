@@ -138,15 +138,17 @@ public class BusinessruleTypeDAO {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Category category = this.cdao.getCategory(rs.getInt(2),con);
-                Map<String, String> parameters = this.pdao.getParameters(id,con);
                 boolean constraintPossible = false;
                 if (rs.getInt(7) == 1) {
                     constraintPossible = true;
                 }
+                brtype = new BusinessRuleType(id, rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),constraintPossible);
+                Category category = this.cdao.getCategory(rs.getInt(2),con);
+                brtype.setCategory(category);
+                Map<String, String> parameters = this.pdao.getParameters(id,con);
+                brtype.setParameters(parameters);
                 ArrayList<Operator> possibleOperators = this.odao.getOperators(id, con);
-                brtype = new BusinessRuleType(id, rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                        constraintPossible, possibleOperators, parameters, category);
+                brtype.setPossibleoperators(possibleOperators);
                 con.close();
             }
            
