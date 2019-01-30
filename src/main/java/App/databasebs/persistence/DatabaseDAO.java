@@ -39,9 +39,7 @@ public class DatabaseDAO {
                 pstmt.setInt(1, rs.getInt("databasetype"));
                 ResultSet tablers = pstmt.executeQuery();
 
-                //TODO: make arraylist of tables in database
                 while(tablers.next()) {
-                    //For each table, get columns and add them to an array list
                     ArrayList<Column> columns = new ArrayList<>();
                     PreparedStatement columnstatement = con.prepareStatement("select * from targetcolumn where targettable = ?");
                     columnstatement.setInt(1, tablers.getInt("id"));
@@ -51,7 +49,6 @@ public class DatabaseDAO {
                         columns.add(col);
                     }
 
-                    //Create the table and add them to list of tables belonging to the database
                     Table table = new Table(tablers.getInt("id"), tablers.getString("name"), columns);
                     tables.add(table);
                 }
@@ -61,7 +58,8 @@ public class DatabaseDAO {
                     DatabaseType type = new DatabaseType(
                             typers.getInt("id"),
                             typers.getString("dialect"),
-                            typers.getString("triggertemplate")
+                            typers.getString("triggertemplate"),
+                            typers.getString("constrainttempalte")
                     );
 
                     Database database = new Database(

@@ -1,7 +1,7 @@
 package App.controllers;
 
 import App.databasebs.model.DatabaseType;
-import App.databasebs.services.DatabaseService;
+import App.databasebs.services.DatabaseTypeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DatabaseTypeController {
-    /*
+
     DatabaseTypeService dbtypeservice = new DatabaseTypeService();
 
     @RequestMapping(value ="/databasetype/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -30,5 +30,5 @@ public class DatabaseTypeController {
             System.out.print(e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
-    }*/
+    }
 }
