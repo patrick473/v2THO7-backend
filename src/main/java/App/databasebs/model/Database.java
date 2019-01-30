@@ -1,8 +1,15 @@
 package App.databasebs.model;
 
+import App.businessrulebs.model.Serializers.BusinessRuleDeserializer;
+import App.businessrulebs.model.Serializers.BusinessRuleSerializer;
+import App.databasebs.model.serializers.DatabaseSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.ArrayList;
 
-
+@JsonSerialize(using = DatabaseSerializer.class)
+//@JsonDeserialize(using = DatabaseDeserializer.class)
 
 public class Database {
 
