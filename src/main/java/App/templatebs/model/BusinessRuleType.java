@@ -2,7 +2,7 @@ package App.templatebs.model;
 
 import java.util.ArrayList;
 import java.util.Map;
-
+import java.util.HashMap;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -36,6 +36,9 @@ public class BusinessRuleType {
         this._explanation = explanation;
         this._example = example;
         this._constraintPossible = constraintPossible;
+        this._possibleOperators = new ArrayList<Operator>();
+        this._parameters = new HashMap<String,String>();
+        this._category = new Category();
         
     }
     public BusinessRuleType(int id,String name, String nameCode, String explanation, String example, boolean constraintPossible,

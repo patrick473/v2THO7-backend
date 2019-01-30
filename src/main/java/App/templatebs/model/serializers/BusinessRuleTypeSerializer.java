@@ -40,18 +40,22 @@ public class BusinessRuleTypeSerializer extends StdSerializer<BusinessRuleType> 
             jgen.writeEndObject();
         }
         jgen.writeEndArray();
-        jgen.writeArrayFieldStart("parameters");
-        for ( Map.Entry<String,String> parameter : value.parameters().entrySet()) {
-            jgen.writeStartObject();
-            jgen.writeStringField("parameter",parameter.getKey());
-            jgen.writeStringField("datatype", parameter.getValue());
+        if(!value.parameters().isEmpty()){
+            jgen.writeArrayFieldStart("parameters");
+            for ( Map.Entry<String,String> parameter : value.parameters().entrySet()) {
+                jgen.writeStartObject();
+                jgen.writeStringField("parameter",parameter.getKey());
+                jgen.writeStringField("datatype", parameter.getValue());
+                jgen.writeEndObject();
+            }
+            jgen.writeEndArray();
+        }
+        if(!(value.category().name() == "")){
+            jgen.writeObjectFieldStart("category");
+            jgen.writeNumberField("id", value.category().id());
+            jgen.writeStringField("name",value.category().name() );
             jgen.writeEndObject();
         }
-        jgen.writeEndArray();
-        jgen.writeObjectFieldStart("category");
-        jgen.writeNumberField("id", value.category().id());
-        jgen.writeStringField("name",value.category().name() );
-        jgen.writeEndObject();
         jgen.writeEndObject();
     }
     
