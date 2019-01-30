@@ -1,5 +1,6 @@
 package App.databasebs.persistence;
 
+import App.databasebs.model.Column;
 import App.databasebs.model.Database;
 import App.databasebs.model.DatabaseType;
 import App.databasebs.model.Table;
@@ -39,6 +40,21 @@ public class DatabaseDAO {
                 ResultSet tablers = pstmt.executeQuery();
 
                 //TODO: make arraylist of tables in database
+                while(tablers.next()) {
+                    //For each table, get columns and add them to an array list
+                    ArrayList<Column> columns = new ArrayList<>();
+                    PreparedStatement columnstatement = con.prepareStatement("select * from targetcolumn where targettable = ?");
+                    columnstatement.setInt(1, tablers.getInt("id"));
+                    ResultSet colrs = columnstatement.executeQuery();
+                    while(colrs.next()) {
+                        Column col = new Column(colrs.getString("name"), colrs.getString("datatype"));
+                        columns.add(col);
+                    }
+
+                    //Create the table and add them to list of tables belonging to the database
+                    Table table = new Table(tablers.getString("name"), columns);
+                    tables.add(table);
+                }
 
                 if(typers.next()) {
 
@@ -48,6 +64,7 @@ public class DatabaseDAO {
                     );
 
                     Database database = new Database(
+                            rs.getInt("id"),
                             rs.getString("name"),
                             rs.getString("username"),
                             rs.getString("password"),
