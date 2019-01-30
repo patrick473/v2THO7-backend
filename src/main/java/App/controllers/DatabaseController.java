@@ -30,7 +30,7 @@ public class DatabaseController {
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
         }
     }

@@ -47,18 +47,19 @@ public class DatabaseDAO {
                     columnstatement.setInt(1, tablers.getInt("id"));
                     ResultSet colrs = columnstatement.executeQuery();
                     while(colrs.next()) {
-                        Column col = new Column(colrs.getString("name"), colrs.getString("datatype"));
+                        Column col = new Column(colrs.getInt("id"), colrs.getString("name"), colrs.getString("datatype"));
                         columns.add(col);
                     }
 
                     //Create the table and add them to list of tables belonging to the database
-                    Table table = new Table(tablers.getString("name"), columns);
+                    Table table = new Table(tablers.getInt("id"), tablers.getString("name"), columns);
                     tables.add(table);
                 }
 
                 if(typers.next()) {
 
                     DatabaseType type = new DatabaseType(
+                            typers.getInt("id"),
                             typers.getString("dialect"),
                             typers.getString("triggertemplate")
                     );

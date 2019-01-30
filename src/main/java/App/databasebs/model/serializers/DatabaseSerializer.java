@@ -34,8 +34,10 @@ public class DatabaseSerializer extends StdSerializer<Database> {
         jgen.writeStringField("port", value.port());
 
         jgen.writeArrayFieldStart("type");
+        jgen.writeStartObject();
         jgen.writeNumberField("id", value.dialect().id());
         jgen.writeStringField("dialect", value.dialect().jdbctypecode());
+        jgen.writeEndObject();
         jgen.writeEndArray();
 
         jgen.writeArrayFieldStart("tables");
