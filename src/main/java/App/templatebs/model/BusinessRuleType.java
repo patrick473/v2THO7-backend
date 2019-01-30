@@ -28,6 +28,16 @@ public class BusinessRuleType {
 
  
     public BusinessRuleType(){}
+    public BusinessRuleType(int id,String name, String nameCode, String explanation, String example, boolean constraintPossible) {
+                
+        this._id = id;
+        this._name = name;
+        this._nameCode = nameCode;
+        this._explanation = explanation;
+        this._example = example;
+        this._constraintPossible = constraintPossible;
+        
+    }
     public BusinessRuleType(int id,String name, String nameCode, String explanation, String example, boolean constraintPossible,
             ArrayList<Operator> possibleOperators, Map<String, String> parameters, Category category) {
                 
