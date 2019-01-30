@@ -70,14 +70,14 @@ public class BusinessruleDAO {
             pstmt.setString(10, br.error());
 
             int id = this.findID(br.name());
-            boolean result = pstmt.execute();
+            int result = pstmt.executeUpdate();
             System.out.print(br.bindings());
             for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
                
                 this.bdao.createBinding(id, binding.getKey(), binding.getValue(),con);
             }
 
-            if(result) {
+            if(result == 1) {
                 con.close();
                 return true;
             }
@@ -92,7 +92,8 @@ public class BusinessruleDAO {
     }
 
     public BusinessRule getSingleRule(int id) {
-        try {
+        try { 
+            BusinessRule br = new BusinessRule();
             Connection con = this.jdbcInstance.getConnection();
             PreparedStatement stmt = con.prepareStatement("select * from businessrule where id = ?");
             stmt.setInt(1, id);
@@ -101,24 +102,11 @@ public class BusinessruleDAO {
 
             if(rs.next()) {
 
-                //Get the bindings of the businessrule
-                PreparedStatement getBindings = con.prepareStatement("select * from binding where businessrule = ?");
-                getBindings.setInt(1, rs.getInt("id"));
-                ResultSet bd = getBindings.executeQuery();
-
-                HashMap<String, String> bindings = new HashMap<>();
-
-                while(bd.next()) {
-                    bindings.put(bd.getString("key"), bd.getString("value"));
-                }
-
-
-                BusinessRule br = new BusinessRule(
+                 br = new BusinessRule(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getBoolean("applied"),
                         rs.getInt("operator"),
-                        bindings,
                         rs.getInt("businessruletype"),
                         rs.getBoolean("constraint"),
                         rs.getInt("targettable"),
@@ -127,13 +115,26 @@ public class BusinessruleDAO {
                         rs.getBoolean("ondelete"),
                         rs.getString("error")
                 );
+            }
+           
+                //Get the bindings of the businessrule
+                PreparedStatement getBindings = con.prepareStatement("select * from binding where businessrule = ?");
+                getBindings.setInt(1, br.id());
+                ResultSet bd = getBindings.executeQuery();
+
+                HashMap<String, String> bindings = new HashMap<>();
+
+                while(bd.next()) {
+                    System.out.print(bd.toString());
+                    bindings.put(bd.getString("key"), bd.getString("value"));
+                }
+                System.out.println(bindings.toString());
+                br.setBindings(bindings);
+
 
                 con.close();
                 return br;
-            }
-            else {
-                return null;
-            }
+            
 
         } catch(Exception e) {
             e.printStackTrace();

@@ -30,6 +30,22 @@ public class BusinessRule {
     private boolean _delete;
     private String _error;
 
+    public BusinessRule(){}
+    public BusinessRule(int id, String name, boolean applied, int operator,
+    int type,boolean constraint, int table, boolean insert, boolean update, boolean delete, String error) {
+    this._id = id;
+    this._name = name;
+    this._applied = applied;
+    this._operator = operator;
+    this._type = type;
+    this._constraint = constraint;
+    this._table = table;
+    this._insert = insert;
+    this._update = update;
+    this._delete = delete;
+    this._error = error;
+}
+
     public BusinessRule(int id, String name, boolean applied, int operator, Map<String, String> bindings,
             BusinessRuleType type,boolean constraint, int table, boolean insert, boolean update, boolean delete, String error) {
         this._id = id;
@@ -79,6 +95,9 @@ public class BusinessRule {
         return this._operator;
     }
 
+    public void setBindings(Map<String, String> bindings) {
+        this._bindings = bindings;
+    }
     public Map<String, String> bindings() {
         return this._bindings;
     }
