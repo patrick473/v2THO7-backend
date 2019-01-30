@@ -259,4 +259,29 @@ public class BusinessruleDAO {
         }
     }
 
+    public boolean applyRule(int id, int applied) {
+        try {
+            BindingDAO binddao = new BindingDAO();
+            Connection con = this.jdbcInstance.getConnection();
+
+            PreparedStatement stmt = con.prepareStatement("update businessrule set applied = ? where id = ?");
+            stmt.setInt(1, applied);
+            stmt.setInt(2, id);
+
+
+            if(stmt.executeUpdate() == 1) {
+                con.close();
+                return true;
+            }
+            else {
+                con.close();
+                return false;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

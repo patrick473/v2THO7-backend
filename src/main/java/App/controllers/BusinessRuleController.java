@@ -1,6 +1,7 @@
 package App.controllers;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -107,6 +108,31 @@ public class BusinessRuleController{
             else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
             }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\":\"Something went wrong handling your request!\",\"object\":{}}");
+        }
+    }
+
+    @RequestMapping(value ="/rule/apply", method = RequestMethod.PUT, produces = "application/text", consumes = "application/json")
+    public ResponseEntity applyRule(@RequestBody String jsonString){
+        try{
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(jsonString);
+            int id  = Integer.parseInt(jsonNode.findValue("id").toString());
+            int applied  = Integer.parseInt(jsonNode.findValue("applied").toString());
+
+            if(brService.applyRule(id, applied)) {
+                return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":{}}");
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":\"Object not found!\",\"object\":{}}");
+            }
+
+
 
         }
         catch(Exception e){

@@ -61,6 +61,11 @@ public class BusinessRuleService {
 
     }
 
+    public boolean applyRule(int id, int applied) {
+        BusinessruleDAO brdao = new BusinessruleDAO();
+        return brdao.applyRule(id, applied);
+    }
+
     public boolean validateBusinessRuleInput(BusinessRule br) {
 
         BusinessRuleTypeService typeservice = new BusinessRuleTypeService();
