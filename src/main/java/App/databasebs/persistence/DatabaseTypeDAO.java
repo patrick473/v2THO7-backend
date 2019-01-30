@@ -1,4 +1,4 @@
 package App.databasebs.persistence;
 
-public class DatabaseTypeDao {
+public class DatabaseTypeDAO {
 }
