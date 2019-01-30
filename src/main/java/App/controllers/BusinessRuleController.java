@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import App.model.businessrulebs.BusinessRule;
-import App.services.BusinessRuleService;
+import App.businessrulebs.model.BusinessRule;
+import App.businessrulebs.services.BusinessRuleService;
 
 import java.util.ArrayList;
 

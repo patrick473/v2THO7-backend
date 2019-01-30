@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import App.model.templatebs.Template;
-import App.services.TemplateService;
+import App.templatebs.model.Template;
+import App.templatebs.services.TemplateService;
 
 import java.util.ArrayList;
 

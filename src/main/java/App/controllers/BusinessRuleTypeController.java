@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import App.model.businessrulebs.BusinessRule;
+import App.businessrulebs.model.BusinessRule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import App.model.templatebs.BusinessRuleType;
-import App.model.templatebs.Category;
-import App.model.templatebs.Operator;
-import App.services.BusinessRuleTypeService;
+import App.templatebs.model.BusinessRuleType;
+import App.templatebs.model.Category;
+import App.templatebs.model.Operator;
+import App.templatebs.services.BusinessRuleTypeService;
 
 @RestController
 public class BusinessRuleTypeController {
