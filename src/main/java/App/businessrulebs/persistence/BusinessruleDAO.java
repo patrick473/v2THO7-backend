@@ -70,8 +70,10 @@ public class BusinessruleDAO {
             pstmt.setString(10, br.error());
 
             int id = this.findID(br.name());
-            boolean result = pstmt.executeUpdate() == 1;
+            boolean result = pstmt.execute();
+            System.out.print(br.bindings());
             for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
+               
                 this.bdao.createBinding(id, binding.getKey(), binding.getValue(),con);
             }
 

@@ -22,12 +22,11 @@ public class BusinessRuleService {
 
     public BusinessRule createNewRule(BusinessRule br){
         BusinessruleDAO brdao = new BusinessruleDAO();
-        if(validateBusinessRuleInput(br)) {
-            if(brdao.createBusinessrule(br)) {
+       
+            brdao.createBusinessrule(br);
                 return br;
-            }
-        }
-        return null;
+            
+      
 
     }
     public BusinessRule getSingleRule(int id){

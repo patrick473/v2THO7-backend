@@ -41,6 +41,7 @@ public class BusinessRuleDeserializer extends StdDeserializer<BusinessRule> {
             bindings.put(binding.get("key").asText(), binding.get("value").asText());
         }
 
+     
         int id = 0;
         if (node.has("id")) {
             id = node.get("id").asInt();

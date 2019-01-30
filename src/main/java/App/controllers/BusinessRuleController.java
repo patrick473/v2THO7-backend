@@ -25,7 +25,9 @@ public class BusinessRuleController{
     @RequestMapping(value ="/rule", method = RequestMethod.POST, produces = "application/text", consumes = "application/json")
     public ResponseEntity newRule(@RequestBody String jsonString){
         try{
+           
             BusinessRule br = new ObjectMapper().readValue(jsonString, BusinessRule.class);
+           
             BusinessRule result = brService.createNewRule(br);
             if(result != null) {
                 return ResponseEntity.status(HttpStatus.OK).body("{\"message\":\"success\",\"object\":"+new ObjectMapper().writeValueAsString(br)+"}");
