@@ -69,8 +69,11 @@ public class BusinessruleDAO {
             }
             pstmt.setString(10, br.error());
 
-            int id = this.findID(br.name());
+        
             int result = pstmt.executeUpdate();
+            int id = this.findID(con);
+            System.out.println();
+            System.out.println(id);
             System.out.print(br.bindings());
             for (Map.Entry<String, String> binding : br.bindings().entrySet()) {
                
@@ -180,12 +183,10 @@ public class BusinessruleDAO {
 
     }
  
-    private int findID(String name) {
+    private int findID(Connection con) {
         try {
-            Connection con = this.jdbcInstance.getConnection();
-
-            PreparedStatement stmt = con.prepareStatement("select id from businessrule where name=?");
-            stmt.setString(1, name);
+            
+            PreparedStatement stmt = con.prepareStatement("select id from businessrule where id=(select max(id) from businessrule)");
 
             ResultSet rs = stmt.executeQuery();
             int id = 0;
@@ -194,10 +195,9 @@ public class BusinessruleDAO {
                 id = rs.getInt("id");
             }
 
-            con.close();
             return id;
         } catch (Exception e) {
-            e.printStackTrace();
+           
             return 0;
         }
     }
